@@ -1,4 +1,4 @@
-package Bibliotheque.Personne;
+package Bibliotheque.Modele.Personne;
 
 import Bibliotheque.Connexion.Connexion;
 

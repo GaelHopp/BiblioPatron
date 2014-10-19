@@ -1,10 +1,9 @@
-package Bibliotheque.Modele;
+package Bibliotheque.Modele.Entites;
 
 import Bibliotheque.Connexion.Connexion;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Statement;
 
 /**
  * Created by Gael on 14/10/2014.

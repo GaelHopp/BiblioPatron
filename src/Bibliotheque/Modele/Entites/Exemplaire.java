@@ -1,4 +1,4 @@
-package Bibliotheque.Modele;
+package Bibliotheque.Modele.Entites;
 
 import Bibliotheque.Connexion.Connexion;
 
@@ -23,11 +23,11 @@ public class Exemplaire {
 
 
     /**
-     * Retourne la liste des exemplaires disponibles pour une oeuvre    NON terminée
-     * @param numOeuvre
+     * Retourne la liste des exemplaires disponibles pour une oeuvre
+     * @param oeuvre
      * @return la liste des exemplaires
      */
-    public static List<Exemplaire> e_exemplaireDispo(int numOeuvre){
+    public static List<Exemplaire> e_exemplaireDispo(Oeuvre oeuvre){
 
         ArrayList<Exemplaire> listeExemplaire = new ArrayList<Exemplaire>();
 
@@ -35,7 +35,7 @@ public class Exemplaire {
         try {
             java.sql.Connection con = Connexion.connexion();
 
-            String query = "SELECT * FROM Exemplaire WHERE idOeuvre = ? ";
+            String query = "SELECT * FROM Exemplaire WHERE idOeuvre = ? AND idExemplaire NOT IN (SELECT idExemplaire FROM Emprunt)";
             PreparedStatement pstmt = null;
 
 
@@ -44,7 +44,7 @@ public class Exemplaire {
 
 
             pstmt = con.prepareStatement(query);
-            pstmt.setInt(1, numOeuvre);
+            pstmt.setInt(1, oeuvre.getIdOeuvre());
 
             results = pstmt.executeQuery();
 

@@ -1,12 +1,7 @@
 package Bibliotheque.Main;
 
-import Bibliotheque.Connexion.Connexion;
-import Bibliotheque.Modele.Oeuvre;
-import Bibliotheque.Personne.Usager;
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import Bibliotheque.Modele.Entites.Oeuvre;
+import Bibliotheque.Modele.Personne.Usager;
 
 /**
  * Created by Gael on 15/10/2014.

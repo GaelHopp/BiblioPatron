@@ -1,9 +1,4 @@
-package Bibliotheque.Personne;
-
-import Bibliotheque.Connexion.Connexion;
-
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+package Bibliotheque.Modele.Personne;
 
 /**
  * Created by Gael on 14/10/2014.
