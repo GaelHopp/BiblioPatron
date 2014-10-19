@@ -16,9 +16,11 @@ public class Exemplaire {
     private int idOeuvre;
     private String etat;
 
+
     public Exemplaire(int idOeuvre, String etat){
         this.idOeuvre = idOeuvre;
         this.etat = etat;
+
     }
 
 
@@ -54,6 +56,7 @@ public class Exemplaire {
             int idOeuvre = results.getInt("idOeuvre");
             String etat = results.getString("etat");
 
+
             Exemplaire exemplaire = new Exemplaire(idOeuvre, etat);
             exemplaire.setIdExemplaire(idExemplaire);
 
@@ -67,6 +70,35 @@ public class Exemplaire {
         }
 
         return listeExemplaire;
+
+    }
+
+
+    public void update(){
+
+        try {
+            java.sql.Connection con = Connexion.connexion();
+
+            String query = "UPDATE Exemplaire SET etat = ? WHERE idExemplaire = ?";
+            PreparedStatement pstmt = null;
+
+            pstmt = con.prepareStatement(query);
+            pstmt.setString(1, this.etat);
+            pstmt.setInt(2, this.idExemplaire);
+
+            pstmt.executeUpdate();
+
+            con.close();
+        }catch(Exception e){
+            e.printStackTrace();
+
+        }
+    }
+
+
+    public void retourEnRayon(){
+
+
 
     }
 
@@ -97,4 +129,6 @@ public class Exemplaire {
     public void setEtat(String etat) {
         this.etat = etat;
     }
+
+
 }
