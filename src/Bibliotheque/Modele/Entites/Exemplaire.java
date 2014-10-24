@@ -4,6 +4,7 @@ import Bibliotheque.Connexion.Connexion;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -74,6 +75,31 @@ public class Exemplaire {
     }
 
 
+    public void insert(){
+        try {
+            java.sql.Connection con = Connexion.connexion();
+
+            String query = "INSERT INTO Exemplaire (idOeuvre, etat) VALUES (?, ?)";
+
+            PreparedStatement pstmt = null;
+
+
+            pstmt = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            pstmt.setInt(1, this.idOeuvre);
+            pstmt.setString(2, this.etat);
+
+
+            pstmt.executeUpdate();
+
+            con.close();
+        }
+
+        catch(Exception e){
+            e.printStackTrace();
+
+        }
+    }
+
     public void update(){
 
         try {
@@ -95,12 +121,6 @@ public class Exemplaire {
         }
     }
 
-
-    public void retourEnRayon(){
-
-
-
-    }
 
     /*
       ############# GETTERS & SETTERS #################

@@ -17,7 +17,7 @@ public class Reservation {
     private int idUsager;
     private int idOeuvre;
     private Timestamp dateRes;
-    private int statut;
+    private int statut;         // 0 en cours 1 terminée
 
 
     public Reservation(int idUsager, int idOeuvre, Timestamp dateRes, int statut){
@@ -36,20 +36,30 @@ public class Reservation {
         try {
             java.sql.Connection con = Connexion.connexion();
 
-            String query = "INSERT INTO Reservation (idUsager, idOeuvre, dateRes, statut) VALUES (?, ?, ?, ?)";
 
-            PreparedStatement pstmt = null;
+           Usager usager = Usager.findById(this.idUsager);
+           Oeuvre oeuvre = Oeuvre.findById(this.idOeuvre);
+
+            if(e_identification(usager, oeuvre) == null){
+
+                String query = "INSERT INTO Reservation (idUsager, idOeuvre, dateRes, statut) VALUES (?, ?, ?, ?)";
+
+                PreparedStatement pstmt = null;
 
 
-            pstmt = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-            pstmt.setInt(1, this.idUsager);
-            pstmt.setInt(2, this.idOeuvre);
-            pstmt.setTimestamp(3, this.dateRes);
-            pstmt.setInt(4, this.statut);
+                pstmt = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+                pstmt.setInt(1, this.idUsager);
+                pstmt.setInt(2, this.idOeuvre);
+                pstmt.setTimestamp(3, this.dateRes);
+                pstmt.setInt(4, this.statut);
 
-            pstmt.executeUpdate();
+                pstmt.executeUpdate();
 
-            con.close();
+                con.close();
+            }
+
+
+
         }
 
         catch(Exception e){
@@ -60,20 +70,7 @@ public class Reservation {
     }
 
 
-    /**
-     * Creation de la reservation d'une oeuvre pour un usager
-     * @param usager
-     * @param oeuvre
-     * @return la reservation
-     */
-     public static Reservation reservation(Usager usager, Oeuvre oeuvre){
 
-         Reservation reservation = new Reservation(usager.getId(),oeuvre.getIdOeuvre(), new Timestamp(new Date().getTime()), 1);
-
-         reservation.insert();
-
-         return reservation;
-     }
 
 
     /**
@@ -90,7 +87,7 @@ public class Reservation {
         try {
             java.sql.Connection con = Connexion.connexion();
 
-            String query = "SELECT * FROM Reservation WHERE idUsager = ? AND idOeuvre = ?";
+            String query = "SELECT * FROM Reservation WHERE idUsager = ? AND idOeuvre = ? AND statut = 0";
             PreparedStatement pstmt = null;
 
 
@@ -99,11 +96,11 @@ public class Reservation {
 
 
             pstmt = con.prepareStatement(query);
-            pstmt.setInt(1, usager.getId());
+            pstmt.setInt(1, usager.getIdPersonne());
             pstmt.setInt(2, oeuvre.getIdOeuvre());
             results = pstmt.executeQuery();
 
-            results.next();
+            if(results.next()){
 
             int idUsager = results.getInt("idUsager");
             int idOeuvre = results.getInt("idOeuvre");
@@ -112,9 +109,10 @@ public class Reservation {
 
 
             reservation = new Reservation(idUsager, idOeuvre, dateRes, statut);
-
+            }
 
             con.close();
+
 
         }
 

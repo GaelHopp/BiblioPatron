@@ -1,8 +1,10 @@
 package Bibliotheque.Modele.Entites;
 
 import Bibliotheque.Connexion.Connexion;
+import Bibliotheque.Modele.Personne.Usager;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.Statement;
 import java.sql.Timestamp;
 
@@ -74,4 +76,90 @@ public class Emprunt {
     }
 
 
+    public static Emprunt e_identification(Usager usager, Exemplaire exemplaire){
+        Emprunt emprunt = null;
+
+        try {
+            java.sql.Connection con = Connexion.connexion();
+
+            String query = "SELECT * FROM Emprunt WHERE idUsager = ? AND idExemplaire = ? WHERE statut = 0";
+            PreparedStatement pstmt = null;
+
+
+            ResultSet results;
+
+
+
+            pstmt = con.prepareStatement(query);
+            pstmt.setInt(1, usager.getIdPersonne());
+            pstmt.setInt(2, exemplaire.getIdExemplaire());
+            results = pstmt.executeQuery();
+
+            if(results.next()){
+
+            int idUsager = results.getInt("idUsager");
+            int idExemplaire = results.getInt("idExemplaire");
+            Timestamp dateEmprunt = results.getTimestamp("dateEmprunt");
+            int statut = results.getInt("statut");
+
+
+            emprunt = new Emprunt(idUsager, idExemplaire, dateEmprunt, statut);
+            }
+
+            con.close();
+
+        }
+
+        catch(Exception e){
+            e.printStackTrace();
+
+        }
+
+        return(emprunt);
+    }
+
+
+    public void terminerEmprunt(){
+
+        this.setStatut(1);
+        this.update();
+
+    }
+
+/*
+###################### GETTERS & SETTERS #########################
+ */
+
+
+    public int getIdUsager() {
+        return idUsager;
+    }
+
+    public void setIdUsager(int idUsager) {
+        this.idUsager = idUsager;
+    }
+
+    public int getIdExemplaire() {
+        return idExemplaire;
+    }
+
+    public void setIdExemplaire(int idExemplaire) {
+        this.idExemplaire = idExemplaire;
+    }
+
+    public Timestamp getDateEmprunt() {
+        return dateEmprunt;
+    }
+
+    public void setDateEmprunt(Timestamp dateEmprunt) {
+        this.dateEmprunt = dateEmprunt;
+    }
+
+    public int getStatut() {
+        return statut;
+    }
+
+    public void setStatut(int statut) {
+        this.statut = statut;
+    }
 }

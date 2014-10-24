@@ -68,7 +68,7 @@ public class Oeuvre {
             pstmt.setString(1, titre);
             results = pstmt.executeQuery();
 
-            results.next();
+            if(results.next()){
 
             int idOeuvre = results.getInt("idOeuvre");
             String titreOeuvre = results.getString("titre");
@@ -77,6 +77,50 @@ public class Oeuvre {
 
                 oeuvre = new Oeuvre(titreOeuvre, auteur);
                 oeuvre.setIdOeuvre(idOeuvre);
+
+            }
+
+            con.close();
+
+        }
+
+        catch(Exception e){
+            e.printStackTrace();
+
+        }
+
+        return(oeuvre);
+    }
+
+
+    public static Oeuvre findById(int id){
+
+        Oeuvre oeuvre = null;
+
+        try {
+            java.sql.Connection con = Connexion.connexion();
+
+            String query = "SELECT * FROM Oeuvre WHERE idOeuvre = ?";
+            PreparedStatement pstmt = null;
+
+
+            ResultSet results;
+
+
+
+            pstmt = con.prepareStatement(query);
+            pstmt.setInt(1, id);
+            results = pstmt.executeQuery();
+
+            results.next();
+
+            int idOeuvre = results.getInt("idOeuvre");
+            String titreOeuvre = results.getString("titre");
+            String auteur = results.getString("auteur");
+
+
+            oeuvre = new Oeuvre(titreOeuvre, auteur);
+            oeuvre.setIdOeuvre(idOeuvre);
 
             con.close();
 

@@ -5,7 +5,7 @@ package Bibliotheque.Modele.Personne;
  */
 public class Personne {
 
-    private int id;
+    private int idPersonne;
     private String nom;
     private String prenom;
     private int age;
@@ -29,12 +29,12 @@ public class Personne {
     ############## GETTERS SETTERS ######################
      */
 
-    public int getId() {
-        return id;
+    public int getIdPersonne() {
+        return idPersonne;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setIdPersonne(int idPersonne) {
+        this.idPersonne = idPersonne;
     }
 
     public String getNom() {

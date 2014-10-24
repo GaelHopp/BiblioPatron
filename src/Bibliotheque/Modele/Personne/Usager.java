@@ -1,10 +1,16 @@
 package Bibliotheque.Modele.Personne;
 
 import Bibliotheque.Connexion.Connexion;
+import Bibliotheque.Modele.Entites.Emprunt;
+import Bibliotheque.Modele.Entites.Exemplaire;
+import Bibliotheque.Modele.Entites.Oeuvre;
+import Bibliotheque.Modele.Entites.Reservation;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.sql.Timestamp;
+import java.util.Date;
 
 /**
  * Created by Gael on 14/10/2014.
@@ -82,7 +88,12 @@ public class Usager extends Personne {
 }
 
 
-
+    /**
+     * Identification d'un usager par son nom et prénom
+     * @param nom
+     * @param prenom
+     * @return
+     */
     public static Usager e_identification(String nom, String prenom){
 
         Usager usager = null;
@@ -123,7 +134,7 @@ public class Usager extends Personne {
                 if(results2.next()){
 
                     usager = new Usager(nomPersonne, prenomPersonne, agePersonne, adressePersonne);
-                    usager.setId(idPersonne);
+                    usager.setIdPersonne(idPersonne);
                 }
 
 
@@ -142,6 +153,86 @@ public class Usager extends Personne {
 
 
 
+
+    }
+
+
+    /**
+     * find a user by an id
+     * @param id
+     * @return
+     */
+    public static Usager findById(int id){
+
+        Usager usager = null;
+
+        try {
+            java.sql.Connection con = Connexion.connexion();
+
+            String query = "SELECT * FROM Usager WHERE idUsager = ?";
+            PreparedStatement pstmt = null;
+
+
+            ResultSet results;
+
+
+
+            pstmt = con.prepareStatement(query);
+            pstmt.setInt(1, id);
+
+            results = pstmt.executeQuery();
+
+            if(results.next()){
+
+
+                String query2 = "SELECT * FROM Personne WHERE idPersonne = ?";
+                PreparedStatement pstmt2 = null;
+                pstmt2 = con.prepareStatement(query2);
+                pstmt2.setInt(1, id);
+
+                ResultSet results2 = pstmt2.executeQuery();
+
+                results2.next();
+
+                int idPersonne = results2.getInt("idPersonne");
+                String nomPersonne = results2.getString("nom");
+                String prenomPersonne = results2.getString("prenom");
+                int agePersonne = results2.getInt("age");
+                String adressePersonne = results2.getString("adresse");
+
+                usager = new Usager(nomPersonne, prenomPersonne, agePersonne, adressePersonne);
+                usager.setIdPersonne(idPersonne);
+
+            }
+
+
+            con.close();
+
+        }
+
+        catch(Exception e){
+            e.printStackTrace();
+
+        }
+
+        return(usager);
+
+
+    }
+
+
+    public void emprunte(Exemplaire exemplaire){
+
+        Emprunt emprunt = new Emprunt(this.getIdPersonne(), exemplaire.getIdExemplaire(), new Timestamp(new Date().getTime()), 0);
+        emprunt.insert();
+
+    }
+
+
+    public void reserve(Oeuvre oeuvre){
+
+        Reservation reservation = new Reservation(this.getIdPersonne(),oeuvre.getIdOeuvre(), new Timestamp(new Date().getTime()), 0);
+        reservation.insert();
 
     }
 
