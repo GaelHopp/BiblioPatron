@@ -16,7 +16,7 @@ public class Emprunt {
     private int idUsager;
     private int idExemplaire;
     private Timestamp dateEmprunt;
-    private int statut;
+    private int statut;         // 0 en cours, 1 terminé
 
 
     public Emprunt(int idUsager, int idExemplaire, Timestamp dateEmprunt, int statut){

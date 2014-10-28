@@ -4,6 +4,7 @@ import Bibliotheque.Modele.Entites.Exemplaire;
 import Bibliotheque.Modele.Entites.Oeuvre;
 import Bibliotheque.Modele.Personne.Usager;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -15,7 +16,7 @@ public class Main {
     public static void main(String[] args) {
 
 
-        Usager usager = new Usager("Hopp", "Gael", 21, "RUE X");
+       /* Usager usager = new Usager("Hopp", "Gael", 21, "RUE X");
 
         usager.insert(); // OK
 
@@ -52,7 +53,15 @@ public class Main {
         List<Exemplaire> exemplaires = Exemplaire.e_exemplaireDispo(Oeuvre.e_identification("Thomas Kedziora"));
 
         if(!exemplaires.isEmpty())
-            gael.emprunte(exemplaires.get(0));
+            gael.emprunte(exemplaires.get(0));*/
+
+
+        Oeuvre oeuvre = Oeuvre.e_identification("Joris Favier");
+        ArrayList<Exemplaire> liste = Exemplaire.e_exemplaireDispo(oeuvre);
+
+        for(Exemplaire e : liste){
+            System.out.println(e.getIdExemplaire());
+        }
 
 }
 

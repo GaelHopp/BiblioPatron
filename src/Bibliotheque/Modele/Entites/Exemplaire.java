@@ -30,7 +30,7 @@ public class Exemplaire {
      * @param oeuvre
      * @return la liste des exemplaires
      */
-    public static List<Exemplaire> e_exemplaireDispo(Oeuvre oeuvre){
+    public static ArrayList<Exemplaire> e_exemplaireDispo(Oeuvre oeuvre){
 
         ArrayList<Exemplaire> listeExemplaire = new ArrayList<Exemplaire>();
 
@@ -38,7 +38,7 @@ public class Exemplaire {
         try {
             java.sql.Connection con = Connexion.connexion();
 
-            String query = "SELECT * FROM Exemplaire WHERE idOeuvre = ? AND idExemplaire NOT IN (SELECT idExemplaire FROM Emprunt)";
+            String query = "SELECT * FROM Exemplaire WHERE idOeuvre = ? AND idExemplaire NOT IN (SELECT idExemplaire FROM Emprunt WHERE statut = 0)";
             PreparedStatement pstmt = null;
 
 
@@ -64,7 +64,34 @@ public class Exemplaire {
             listeExemplaire.add(exemplaire);
 
 
+
             }
+
+            String queryCount = "SELECT COUNT(*) AS nb FROM Reservation WHERE idOeuvre = ? AND statut = 0";
+
+
+            PreparedStatement pstmt2 = null;
+
+
+            ResultSet results2;
+
+            pstmt2 = con.prepareStatement(queryCount);
+            pstmt2.setInt(1, oeuvre.getIdOeuvre());
+
+            results2 = pstmt2.executeQuery();
+
+            results2.next();
+
+            int nbExemplaireReserve = results2.getInt("nb");
+
+
+
+            if(nbExemplaireReserve < listeExemplaire.size()){
+                for(int i=0; i < nbExemplaireReserve; i++){
+                    listeExemplaire.remove(listeExemplaire.size()-1);
+                }
+            }
+
         }catch(Exception e){
             e.printStackTrace();
 
