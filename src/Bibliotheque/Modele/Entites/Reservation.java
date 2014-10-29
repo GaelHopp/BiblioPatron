@@ -157,7 +157,7 @@ public class Reservation {
      */
     public void reservationTerminee(){
 
-         this.setStatut(0);
+         this.setStatut(1);
          this.update();
 
     }
