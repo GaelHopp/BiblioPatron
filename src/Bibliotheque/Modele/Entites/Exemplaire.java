@@ -1,10 +1,12 @@
 package Bibliotheque.Modele.Entites;
 
 import Bibliotheque.Connexion.Connexion;
+import Bibliotheque.Modele.Personne.Usager;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,12 +18,13 @@ public class Exemplaire {
     private int idExemplaire;
     private int idOeuvre;
     private String etat;
+    private int statut;
 
 
     public Exemplaire(int idOeuvre, String etat){
         this.idOeuvre = idOeuvre;
         this.etat = etat;
-
+        this.statut = 1;
     }
 
 
@@ -148,6 +151,51 @@ public class Exemplaire {
         }
     }
 
+    public static Exemplaire e_identification(int id){
+        Exemplaire exemplaire = null;
+
+        try {
+            java.sql.Connection con = Connexion.connexion();
+
+            String query = "SELECT * FROM Exemplaire WHERE idExemplaire=?";
+            PreparedStatement pstmt = null;
+
+
+            ResultSet results;
+
+
+
+            pstmt = con.prepareStatement(query);
+            pstmt.setInt(1, id);
+            results = pstmt.executeQuery();
+
+            if(results.next()){
+
+                int idOeuvre = results.getInt("idOeuvre");
+                String etat = results.getString("etat");
+
+
+                exemplaire = new Exemplaire(idOeuvre, etat);
+                exemplaire.setIdExemplaire(id);
+            }
+
+            con.close();
+
+        }
+
+        catch(Exception e){
+            e.printStackTrace();
+
+        }
+
+        return(exemplaire);
+    }
+
+    public void delete(){
+        this.setStatut(0);
+        this.update();
+    }
+
 
     /*
       ############# GETTERS & SETTERS #################
@@ -177,5 +225,11 @@ public class Exemplaire {
         this.etat = etat;
     }
 
+    public int getStatut() {
+        return statut;
+    }
 
+    public void setStatut(int statut) {
+        this.statut = statut;
+    }
 }
