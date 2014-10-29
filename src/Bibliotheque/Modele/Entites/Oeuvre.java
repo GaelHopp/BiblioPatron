@@ -13,11 +13,13 @@ public class Oeuvre {
     private int idOeuvre;
     private String titre;
     private String auteur;
+    private int statut;
 
 
     public Oeuvre(String titre, String auteur){
         this.titre = titre;
         this.auteur = auteur;
+        this.statut = 1;
     }
 
 
@@ -26,7 +28,7 @@ public class Oeuvre {
         try {
             java.sql.Connection con = Connexion.connexion();
 
-            String query = "INSERT INTO Oeuvre (titre, auteur) VALUES (?, ?)";
+            String query = "INSERT INTO Oeuvre (titre, auteur,satut) VALUES (?, ?, ?)";
 
             PreparedStatement pstmt = null;
 
@@ -34,6 +36,7 @@ public class Oeuvre {
             pstmt = con.prepareStatement(query);
             pstmt.setString(1, this.getTitre());
             pstmt.setString(2, this.getAuteur());
+            pstmt.setInt(3, this.getStatut());
 
             pstmt.executeUpdate();
 
@@ -46,6 +49,29 @@ public class Oeuvre {
 
         }
 
+    }
+
+    public void update(){
+        try {
+            java.sql.Connection con = Connexion.connexion();
+
+            String query = "UPDATE Oeuvre SET statut = ?, titre=?, auteur=? WHERE idOeuvre = ? ";
+            PreparedStatement pstmt = null;
+
+            pstmt = con.prepareStatement(query);
+            pstmt.setInt(1, this.statut);
+            pstmt.setString(2, this.titre);
+            pstmt.setString(3, this.auteur);
+            pstmt.setInt(4, this.idOeuvre);
+
+
+            pstmt.executeUpdate();
+
+            con.close();
+        }catch(Exception e){
+            e.printStackTrace();
+
+        }
     }
 
 
@@ -139,6 +165,12 @@ public class Oeuvre {
         return("Titre = "+this.titre+"   Auteur = "+this.auteur);
     }
 
+    public void delete(){
+        this.setStatut(0);
+        this.update();
+
+    }
+
 
     /*
        ################  GETTERS & SETTERS ###################
@@ -167,4 +199,8 @@ public class Oeuvre {
     public void setAuteur(String auteur) {
         this.auteur = auteur;
     }
+
+    public int getStatut() { return statut; }
+
+    public void setStatut(int statut) { this.statut = statut; }
 }

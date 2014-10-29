@@ -7,6 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.sql.Timestamp;
+import java.util.Date;
 
 /**
  * Created by Gael on 14/10/2014.
@@ -24,6 +25,13 @@ public class Emprunt {
         this.idExemplaire = idExemplaire;
         this.dateEmprunt = dateEmprunt;
         this.statut = statut;
+    }
+
+    public Emprunt(int idUsager, int idExemplaire){
+        this.idUsager = idUsager;
+        this.idExemplaire = idExemplaire;
+        this.dateEmprunt = new Timestamp((new Date()).getTime());
+        this.statut = 0;
     }
 
 

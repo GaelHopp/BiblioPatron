@@ -27,6 +27,13 @@ public class Reservation {
         this.statut = statut;
     }
 
+    public Reservation(int idUsager, int idOeuvre){
+        this.idUsager = idUsager;
+        this.idOeuvre = idOeuvre;
+        this.dateRes = new Timestamp((new Date()).getTime());
+        this.statut = 0;
+    }
+
 
     /**
      * Insertion de la reservation dans la base
