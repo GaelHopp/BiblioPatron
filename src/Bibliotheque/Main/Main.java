@@ -50,18 +50,7 @@ public class Main {
 
         gael.reserve(oeuvre);
 
-        List<Exemplaire> exemplaires = Exemplaire.e_exemplaireDispo(Oeuvre.e_identification("Thomas Kedziora"));
 
-        if(!exemplaires.isEmpty())
-            gael.emprunte(exemplaires.get(0));
-
-
-
-        ArrayList<Exemplaire> liste = Exemplaire.e_exemplaireDispo(oeuvre);
-
-        for(Exemplaire e : liste){
-            System.out.println(e.getIdExemplaire());
-        }
 
 }
 

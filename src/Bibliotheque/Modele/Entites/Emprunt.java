@@ -7,6 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -90,7 +91,7 @@ public class Emprunt {
         try {
             java.sql.Connection con = Connexion.connexion();
 
-            String query = "SELECT * FROM Emprunt WHERE idUsager = ? AND idExemplaire = ? WHERE statut = 0";
+            String query = "SELECT * FROM Emprunt WHERE idUsager = ? AND idExemplaire = ? AND statut = 0";
             PreparedStatement pstmt = null;
 
 
@@ -132,6 +133,50 @@ public class Emprunt {
         this.setStatut(1);
         this.update();
 
+    }
+
+
+    public static ArrayList<Emprunt> empruntsEnCours(){
+
+        ArrayList<Emprunt> listeEmprunts = new ArrayList<Emprunt>();
+
+        try {
+            java.sql.Connection con = Connexion.connexion();
+
+            String query = "SELECT * FROM Emprunt WHERE statut = 0";
+            PreparedStatement pstmt = null;
+
+
+            ResultSet results;
+
+
+
+            pstmt = con.prepareStatement(query);
+
+            results = pstmt.executeQuery();
+
+            while(results.next()){
+
+                int idUsager = results.getInt("idUsager");
+                int idExemplaire = results.getInt("idExemplaire");
+                Timestamp dateEmprunt = results.getTimestamp("dateEmprunt");
+                int statut = results.getInt("statut");
+
+
+               Emprunt emprunt = new Emprunt(idUsager, idExemplaire, dateEmprunt, statut);
+                listeEmprunts.add(emprunt);
+            }
+
+            con.close();
+
+        }
+
+        catch(Exception e){
+            e.printStackTrace();
+
+        }
+
+        return(listeEmprunts);
     }
 
 /*

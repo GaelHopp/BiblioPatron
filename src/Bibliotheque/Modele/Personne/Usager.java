@@ -1,6 +1,7 @@
 package Bibliotheque.Modele.Personne;
 
 import Bibliotheque.Connexion.Connexion;
+import Bibliotheque.Exception.UsagerExistantException;
 import Bibliotheque.Modele.Entites.Emprunt;
 import Bibliotheque.Modele.Entites.Exemplaire;
 import Bibliotheque.Modele.Entites.Oeuvre;
@@ -10,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -35,7 +37,11 @@ public class Usager extends Personne {
     /**
      * Insertion d'un usager dans la base
      */
-    public void insert(){
+    public void insert() throws UsagerExistantException{
+
+        Usager existant = e_identification(this.getNom(),this.getPrenom());
+
+        if(existant == null){
 
         try {
             java.sql.Connection con = Connexion.connexion();
@@ -83,6 +89,10 @@ public class Usager extends Personne {
         catch(Exception e){
             e.printStackTrace();
 
+        }
+        }
+        else{
+            throw new UsagerExistantException();
         }
 
 }
@@ -217,6 +227,62 @@ public class Usager extends Personne {
 
         return(usager);
 
+
+    }
+
+
+    public static ArrayList<Usager> listerUsagers(){
+
+        ArrayList<Usager> liste = new ArrayList<Usager>();
+
+
+        try {
+            java.sql.Connection con = Connexion.connexion();
+
+            String query = "SELECT * FROM Personne WHERE idPersonne IN (SELECT idUsager FROM Usager)";
+            PreparedStatement pstmt = null;
+
+
+            ResultSet results;
+
+
+
+            pstmt = con.prepareStatement(query);
+
+
+            results = pstmt.executeQuery();
+
+            while(results.next()){
+
+
+
+
+                int idPersonne = results.getInt("idPersonne");
+                String nomPersonne = results.getString("nom");
+                String prenomPersonne = results.getString("prenom");
+                int agePersonne = results.getInt("age");
+                String adressePersonne = results.getString("adresse");
+
+                Usager usager = new Usager(nomPersonne, prenomPersonne, agePersonne, adressePersonne);
+                usager.setIdPersonne(idPersonne);
+
+                liste.add(usager);
+
+            }
+
+
+            con.close();
+
+        }
+
+        catch(Exception e){
+            e.printStackTrace();
+
+        }
+
+
+
+        return(liste);
 
     }
 

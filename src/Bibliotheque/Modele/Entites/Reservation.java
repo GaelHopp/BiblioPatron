@@ -7,6 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -166,6 +167,52 @@ public class Reservation {
 
          this.setStatut(1);
          this.update();
+
+    }
+
+
+    public static ArrayList<Reservation> listerReservationEnCours(){
+
+        ArrayList<Reservation> liste = new ArrayList<Reservation>();
+
+        try {
+            java.sql.Connection con = Connexion.connexion();
+
+            String query = "SELECT * FROM Reservation WHERE statut = 0";
+            PreparedStatement pstmt = null;
+
+
+            ResultSet results;
+
+
+
+            pstmt = con.prepareStatement(query);
+
+            results = pstmt.executeQuery();
+
+            while(results.next()){
+
+                int idUsager = results.getInt("idUsager");
+                int idOeuvre = results.getInt("idOeuvre");
+                Timestamp dateRes = results.getTimestamp("dateRes");
+                int statut = results.getInt("statut");
+
+
+                Reservation reservation = new Reservation(idUsager, idOeuvre, dateRes, statut);
+                liste.add(reservation);
+            }
+
+            con.close();
+
+
+        }
+
+        catch(Exception e){
+            e.printStackTrace();
+
+        }
+
+        return(liste);
 
     }
 

@@ -8,6 +8,8 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -94,6 +96,9 @@ public class Exemplaire {
                     listeExemplaire.remove(listeExemplaire.size()-1);
                 }
             }
+            else{
+                listeExemplaire.removeAll(listeExemplaire);
+            }
 
         }catch(Exception e){
             e.printStackTrace();
@@ -109,7 +114,7 @@ public class Exemplaire {
         try {
             java.sql.Connection con = Connexion.connexion();
 
-            String query = "INSERT INTO Exemplaire (idOeuvre, etat) VALUES (?, ?)";
+            String query = "INSERT INTO Exemplaire (idOeuvre, etat, statut) VALUES (?, ?, ?)";
 
             PreparedStatement pstmt = null;
 
@@ -117,6 +122,7 @@ public class Exemplaire {
             pstmt = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             pstmt.setInt(1, this.idOeuvre);
             pstmt.setString(2, this.etat);
+            pstmt.setInt(3, this.statut);
 
 
             pstmt.executeUpdate();
@@ -135,12 +141,13 @@ public class Exemplaire {
         try {
             java.sql.Connection con = Connexion.connexion();
 
-            String query = "UPDATE Exemplaire SET etat = ? WHERE idExemplaire = ?";
+            String query = "UPDATE Exemplaire SET etat = ?, statut = ? WHERE idExemplaire = ?";
             PreparedStatement pstmt = null;
 
             pstmt = con.prepareStatement(query);
             pstmt.setString(1, this.etat);
-            pstmt.setInt(2, this.idExemplaire);
+            pstmt.setInt(2, this.statut);
+            pstmt.setInt(3, this.idExemplaire);
 
             pstmt.executeUpdate();
 
@@ -195,6 +202,58 @@ public class Exemplaire {
         this.setStatut(0);
         this.update();
     }
+
+
+  /*  public HashMap<Integer, Integer> nombreExemplairesDisponibles(){
+
+        HashMap<Integer, Integer> liste = new HashMap<Integer, Integer>();
+
+
+        try {
+            java.sql.Connection con = Connexion.connexion();
+
+            String query = "SELECT idOeuvre FROM Oeuvre WHERE statut = 1";
+            PreparedStatement pstmt = null;
+
+
+            ResultSet results;
+
+            pstmt = con.prepareStatement(query);
+
+            results = pstmt.executeQuery();
+
+            while(results.next()){
+
+                int idOeuvre = results.getInt("idOeuvre");
+
+
+                String query2 = "SELECT COUNT(*) AS nb FROM Exemplaire WHERE idOeuvre = ? AND statut = 1";
+                PreparedStatement pstmt2 = null;
+
+
+                ResultSet results2;
+
+                pstmt2 = con.prepareStatement(query2);
+
+                results2 = pstmt2.executeQuery();
+
+                results2.next();
+
+                liste.put(idOeuvre, results2.getInt("nb"));
+            }
+
+            con.close();
+
+        }
+
+        catch(Exception e){
+            e.printStackTrace();
+
+        }
+
+
+        return(liste);
+    }*/
 
 
     /*

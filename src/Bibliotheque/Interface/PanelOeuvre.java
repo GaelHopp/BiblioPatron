@@ -1,5 +1,6 @@
 package Bibliotheque.Interface;
 
+import Bibliotheque.Modele.Entites.Exemplaire;
 import Bibliotheque.Modele.Entites.Oeuvre;
 import Bibliotheque.Modele.Personne.Usager;
 
@@ -17,21 +18,7 @@ public class PanelOeuvre extends PanelGeneral {
     }
 
     public void listerOeuvre(){
-        ArrayList<Oeuvre> listeOeuvre = new ArrayList<Oeuvre>();
-
-        listeOeuvre.add(new Oeuvre("Harry Potter 1", "JK Rowling"));
-        listeOeuvre.add(new Oeuvre("Harry Potter 2", "JK Rowling"));
-        listeOeuvre.add(new Oeuvre("Harry Potter 3", "JK Rowling"));
-        listeOeuvre.add(new Oeuvre("Harry Potter 4", "JK Rowling"));
-        listeOeuvre.add(new Oeuvre("Harry Potter 5", "JK Rowling"));
-        listeOeuvre.add(new Oeuvre("Harry Potter 6", "JK Rowling"));
-        listeOeuvre.add(new Oeuvre("OeuvreRandom1", "AuteurRandom"));
-        listeOeuvre.add(new Oeuvre("OeuvreRandom2", "AuteurRandom"));
-        listeOeuvre.add(new Oeuvre("OeuvreRandom3", "AuteurRandom"));
-        listeOeuvre.add(new Oeuvre("OeuvreRandom4", "AuteurRandom"));
-        listeOeuvre.add(new Oeuvre("OeuvreRandom5", "AuteurRandom"));
-        listeOeuvre.add(new Oeuvre("OeuvreRandom6", "AuteurRandom"));
-
+        ArrayList<Oeuvre> listeOeuvre = Oeuvre.listerOeuvres();
 
         this.liste.setLayout(new BoxLayout(this.liste, BoxLayout.PAGE_AXIS));
 
@@ -44,17 +31,29 @@ public class PanelOeuvre extends PanelGeneral {
             labelID.setPreferredSize(new Dimension(30,20));
 
             JLabel labelTitre = new JLabel(oeuvre.getTitre());
-            labelTitre.setPreferredSize(new Dimension(300,20));
+            labelTitre.setPreferredSize(new Dimension(200,20));
 
             JLabel labelAuteur = new JLabel(oeuvre.getAuteur());
-            labelAuteur.setPreferredSize(new Dimension(200,20));
+            labelAuteur.setPreferredSize(new Dimension(100,20));
+
+            int nombreExemplaire = Exemplaire.e_exemplaireDispo(oeuvre).size();
+
+            JLabel labelNombre = new JLabel(nombreExemplaire+"");
+            labelNombre.setPreferredSize(new Dimension(50,20));
 
             panel.add(labelID);
             panel.add(labelTitre);
             panel.add(labelAuteur);
+            panel.add(labelNombre);
 
-            JButton reservation = new JButton("Faire une réservation");
+            JButton reservation = new JButton("Réserver");
             panel.add(reservation);
+
+            if(nombreExemplaire > 0){
+                JButton emprunt = new JButton("Emprunter");
+                panel.add(emprunt);
+            }
+
 
 
             this.liste.add(panel);

@@ -32,30 +32,31 @@ public class PanelPrincipal extends JPanel {
         PanelUsager panelUsager = new PanelUsager();
         PanelOeuvre panelOeuvre = new PanelOeuvre();
         PanelReservation panelReservation = new PanelReservation();
-        PanelExemplaire panelExemplaire = new PanelExemplaire();
+       // PanelExemplaire panelExemplaire = new PanelExemplaire();
         PanelEmprunt panelEmprunt = new PanelEmprunt();
 
         panelUsager.ajoutListe();
         panelOeuvre.ajoutListe();
         panelReservation.ajoutListe();
-        panelExemplaire.ajoutListe();
+        //panelExemplaire.ajoutListe();
         panelEmprunt.ajoutListe();
 
         panelUsager.ajoutAjout();
         panelOeuvre.ajoutAjout();
         panelReservation.ajoutAjout();
-        panelExemplaire.ajoutAjout();
+        //panelExemplaire.ajoutAjout();
         panelEmprunt.ajoutAjout();
 
         panelUsager.listerUsager();
         panelUsager.ajouterUsager();
         panelOeuvre.listerOeuvre();
         panelOeuvre.ajouterOeuvre();
+        panelReservation.listerReservation();
 
         this.onglets.addTab("Usagers", panelUsager);
         this.onglets.addTab("Oeuvres", panelOeuvre);
         this.onglets.addTab("Reservations", panelReservation);
-        this.onglets.addTab("Exemplaires", panelExemplaire);
+        //this.onglets.addTab("Exemplaires", panelExemplaire);
         this.onglets.addTab("Emprunts", panelEmprunt);
 
 

@@ -16,17 +16,9 @@ public class PanelUsager extends PanelGeneral {
     }
 
    public void listerUsager(){
-       ArrayList<Usager> listeUsager = new ArrayList<Usager>();
+       ArrayList<Usager> listeUsager = Usager.listerUsagers();
 
-       listeUsager.add(new Usager("Hopp","Gael", 21, "Rue de "));
-       listeUsager.add(new Usager("Favier","Joris", 21, "Rue de "));
-       listeUsager.add(new Usager("Benali","DJKhalid", 21, "Rue de "));
-       listeUsager.add(new Usager("Halin","Genie", 21, "Rue de "));
-       listeUsager.add(new Usager("nom","pif", 21, "Rue de "));
-       listeUsager.add(new Usager("dada","dodo", 21, "Rue de "));
-       listeUsager.add(new Usager("toto","tata", 21, "Rue de "));
-       listeUsager.add(new Usager("boubou","baba", 21, "Rue de "));
-       listeUsager.add(new Usager("azim","babwé", 21, "Rue de "));
+
 
        this.liste.setLayout(new BoxLayout(this.liste, BoxLayout.PAGE_AXIS));
 

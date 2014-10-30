@@ -1,9 +1,11 @@
 package Bibliotheque.Modele.Entites;
 
 import Bibliotheque.Connexion.Connexion;
+import Bibliotheque.Exception.OeuvreExistanteException;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 
 /**
  * Created by Gael on 14/10/2014.
@@ -23,12 +25,16 @@ public class Oeuvre {
     }
 
 
-    public void insert(){
+    public void insert() throws OeuvreExistanteException{
+
+        Oeuvre existant = e_identification(this.getTitre());
+
+        if(existant == null){
 
         try {
             java.sql.Connection con = Connexion.connexion();
 
-            String query = "INSERT INTO Oeuvre (titre, auteur,satut) VALUES (?, ?, ?)";
+            String query = "INSERT INTO Oeuvre (titre, auteur,statut) VALUES (?, ?, ?)";
 
             PreparedStatement pstmt = null;
 
@@ -47,6 +53,10 @@ public class Oeuvre {
         catch(Exception e){
             e.printStackTrace();
 
+        }
+        }
+        else{
+            throw new OeuvreExistanteException();
         }
 
     }
@@ -158,6 +168,61 @@ public class Oeuvre {
         }
 
         return(oeuvre);
+    }
+
+
+    public static ArrayList<Oeuvre> listerOeuvres(){
+
+        ArrayList<Oeuvre> liste = new ArrayList<Oeuvre>();
+
+
+        try {
+            java.sql.Connection con = Connexion.connexion();
+
+            String query = "SELECT * FROM Oeuvre WHERE statut = 1";
+            PreparedStatement pstmt = null;
+
+
+            ResultSet results;
+
+
+
+            pstmt = con.prepareStatement(query);
+
+
+            results = pstmt.executeQuery();
+
+            while(results.next()){
+
+
+
+
+                int idOeuvre = results.getInt("idOeuvre");
+                String titre = results.getString("titre");
+                String auteur = results.getString("auteur");
+
+
+                Oeuvre oeuvre = new Oeuvre(titre,auteur);
+                oeuvre.setIdOeuvre(idOeuvre);
+
+                liste.add(oeuvre);
+
+            }
+
+
+            con.close();
+
+        }
+
+        catch(Exception e){
+            e.printStackTrace();
+
+        }
+
+
+
+        return(liste);
+
     }
 
 
