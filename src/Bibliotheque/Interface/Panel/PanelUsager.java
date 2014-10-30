@@ -1,9 +1,14 @@
-package Bibliotheque.Interface;
+package Bibliotheque.Interface.Panel;
 
+import Bibliotheque.Exception.UsagerExistantException;
+import Bibliotheque.Interface.Fenetre.FenetreOeuvres;
+import Bibliotheque.Interface.Fenetre.FenetreUsagers;
 import Bibliotheque.Modele.Personne.Usager;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 /**
@@ -22,7 +27,7 @@ public class PanelUsager extends PanelGeneral {
 
        this.liste.setLayout(new BoxLayout(this.liste, BoxLayout.PAGE_AXIS));
 
-       for(Usager usager : listeUsager){
+       for(final Usager usager : listeUsager){
            JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 
            panel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
@@ -45,8 +50,22 @@ public class PanelUsager extends PanelGeneral {
            panel.add(labelPrenom);
            panel.add(labelAge);
 
-           JButton reservation = new JButton("Faire une réservation");
-           panel.add(reservation);
+           JButton reservationEmprunt = new JButton("Réserver / Emprunter");
+
+           final Usager usagerFinal = usager;
+
+           reservationEmprunt.addActionListener(new ActionListener() {
+               @Override
+               public void actionPerformed(ActionEvent e) {
+
+                   FenetreOeuvres fenetre = new FenetreOeuvres();
+
+
+                   fenetre.listerOeuvre(usagerFinal);
+               }
+           });
+
+           panel.add(reservationEmprunt);
 
            this.liste.add(panel);
 
@@ -85,10 +104,10 @@ public class PanelUsager extends PanelGeneral {
         JLabel labelAdresse = new JLabel("Adresse : ");
         labelAdresse.setPreferredSize(new Dimension(150,30));
 
-        JTextField fieldNom = new JTextField();
-        JTextField fieldPrenom = new JTextField();
-        JTextField fieldAge = new JTextField();
-        JTextField fieldAdresse = new JTextField();
+        final JTextField fieldNom = new JTextField();
+        final JTextField fieldPrenom = new JTextField();
+        final JTextField fieldAge = new JTextField();
+        final JTextField fieldAdresse = new JTextField();
 
         fieldNom.setPreferredSize(new Dimension(200,20));
         fieldPrenom.setPreferredSize(new Dimension(200,20));
@@ -113,7 +132,41 @@ public class PanelUsager extends PanelGeneral {
         this.ajout.add(adresse);
 
         JButton ajouter = new JButton("Ajouter");
+
+
+
+        ajouter.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(fieldNom.getText().length() > 0 && fieldPrenom.getText().length() > 0 && fieldAge.getText().length() > 0 && fieldAge.getText().length() < 4 && fieldAdresse.getText().length() > 0){
+
+                    try{
+
+                        Usager usager = new Usager(fieldNom.getText(), fieldPrenom.getText(), Integer.parseInt(fieldAge.getText()), fieldAdresse.getText());
+                        usager.insert();
+                        JOptionPane.showMessageDialog(null, "Usager inséré");
+                        liste.removeAll();
+                        listerUsager();
+                        fieldNom.setText("");
+                        fieldPrenom.setText("");
+                        fieldAge.setText("");
+                        fieldAdresse.setText("");
+                    }catch(UsagerExistantException uee){
+                        JOptionPane.showMessageDialog(null, "L'usager existe déjà");
+                    }catch(NumberFormatException nfe){
+                        JOptionPane.showMessageDialog(null, "L'âge saisi n'est pas correct");
+                    }
+
+
+                }else{
+                    JOptionPane.showMessageDialog(null, "Les champs ne sont pas remplis correctement !");
+                }
+            }
+        });
+
         this.ajout.add(ajouter);
 
     }
+
+
 }

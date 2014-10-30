@@ -1,5 +1,7 @@
 package Bibliotheque.Main;
 
+import Bibliotheque.Exception.OeuvreExistanteException;
+import Bibliotheque.Exception.UsagerExistantException;
 import Bibliotheque.Modele.Entites.Exemplaire;
 import Bibliotheque.Modele.Entites.Oeuvre;
 import Bibliotheque.Modele.Personne.Usager;
@@ -13,7 +15,7 @@ import java.util.List;
 public class Main {
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws UsagerExistantException, OeuvreExistanteException{
 
 
        Usager usager = new Usager("Hopp", "Gael", 21, "RUE X");

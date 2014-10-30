@@ -124,7 +124,7 @@ public class Usager extends Personne {
             pstmt.setString(2, prenom);
             results = pstmt.executeQuery();
 
-            results.next();
+            if(results.next()){
 
                 int idPersonne = results.getInt("idPersonne");
                 String nomPersonne = results.getString("nom");
@@ -146,6 +146,7 @@ public class Usager extends Personne {
                     usager = new Usager(nomPersonne, prenomPersonne, agePersonne, adressePersonne);
                     usager.setIdPersonne(idPersonne);
                 }
+            }
 
 
 

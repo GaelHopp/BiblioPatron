@@ -1,11 +1,16 @@
-package Bibliotheque.Interface;
+package Bibliotheque.Interface.Panel;
 
+import Bibliotheque.Exception.OeuvreExistanteException;
+import Bibliotheque.Exception.UsagerExistantException;
+import Bibliotheque.Interface.Fenetre.FenetreUsagers;
 import Bibliotheque.Modele.Entites.Exemplaire;
 import Bibliotheque.Modele.Entites.Oeuvre;
 import Bibliotheque.Modele.Personne.Usager;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 /**
@@ -22,7 +27,7 @@ public class PanelOeuvre extends PanelGeneral {
 
         this.liste.setLayout(new BoxLayout(this.liste, BoxLayout.PAGE_AXIS));
 
-        for(Oeuvre oeuvre : listeOeuvre){
+        for(final Oeuvre oeuvre : listeOeuvre){
             JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 
             panel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
@@ -36,7 +41,7 @@ public class PanelOeuvre extends PanelGeneral {
             JLabel labelAuteur = new JLabel(oeuvre.getAuteur());
             labelAuteur.setPreferredSize(new Dimension(100,20));
 
-            int nombreExemplaire = Exemplaire.e_exemplaireDispo(oeuvre).size();
+            final int nombreExemplaire = Exemplaire.e_exemplaireDispo(oeuvre).size();
 
             JLabel labelNombre = new JLabel(nombreExemplaire+"");
             labelNombre.setPreferredSize(new Dimension(50,20));
@@ -46,13 +51,24 @@ public class PanelOeuvre extends PanelGeneral {
             panel.add(labelAuteur);
             panel.add(labelNombre);
 
-            JButton reservation = new JButton("Réserver");
-            panel.add(reservation);
+            JButton reservationEmprunt = new JButton("Réserver / Emprunter");
 
-            if(nombreExemplaire > 0){
-                JButton emprunt = new JButton("Emprunter");
-                panel.add(emprunt);
-            }
+            reservationEmprunt.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    FenetreUsagers fenetre = new FenetreUsagers();
+                    boolean empruntOK = false;
+
+                    if(nombreExemplaire > 0)
+                        empruntOK = true;
+
+                    fenetre.listerUsager(oeuvre, empruntOK);
+                }
+            });
+
+            panel.add(reservationEmprunt);
+
+
 
 
 
@@ -85,8 +101,8 @@ public class PanelOeuvre extends PanelGeneral {
         labelAuteur.setPreferredSize(new Dimension(150,30));
 
 
-        JTextField fieldTitre = new JTextField();
-        JTextField fieldAuteur = new JTextField();
+        final JTextField fieldTitre = new JTextField();
+        final JTextField fieldAuteur = new JTextField();
 
 
         fieldTitre.setPreferredSize(new Dimension(200,20));
@@ -107,6 +123,35 @@ public class PanelOeuvre extends PanelGeneral {
 
 
         JButton ajouter = new JButton("Ajouter");
+
+
+
+        ajouter.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (fieldTitre.getText().length() > 0 && fieldAuteur.getText().length() > 0) {
+
+                    try {
+
+                        Oeuvre oeuvre = new Oeuvre(fieldTitre.getText(), fieldAuteur.getText());
+                        oeuvre.insert();
+                        JOptionPane.showMessageDialog(null, "Oeuvre insérée");
+                        liste.removeAll();
+                        listerOeuvre();
+                        fieldTitre.setText("");
+                        fieldAuteur.setText("");
+
+                    } catch (OeuvreExistanteException oee) {
+                        JOptionPane.showMessageDialog(null, "L'oeuvre existe déjà");
+                    }
+
+
+                } else {
+                    JOptionPane.showMessageDialog(null, "Les champs ne sont pas remplis correctement !");
+                }
+            }
+        });
+
         this.ajout.add(ajouter);
 
     }

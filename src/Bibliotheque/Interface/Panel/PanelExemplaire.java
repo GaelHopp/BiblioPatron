@@ -1,16 +1,11 @@
-package Bibliotheque.Interface;
+package Bibliotheque.Interface.Panel;
 
 import Bibliotheque.Modele.Entites.Exemplaire;
 import Bibliotheque.Modele.Entites.Oeuvre;
-import Bibliotheque.Modele.Entites.Reservation;
-import Bibliotheque.Modele.Personne.Usager;
 
 import javax.swing.*;
 import java.awt.*;
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 /**
  * Created by Gael on 29/10/14.

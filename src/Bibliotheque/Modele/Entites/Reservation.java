@@ -142,7 +142,7 @@ public class Reservation {
         try {
             java.sql.Connection con = Connexion.connexion();
 
-            String query = "UPDATE Reservation SET statut = ? WHERE idUsager = ? AND idOeuvre = ?";
+            String query = "UPDATE Reservation SET statut = ? WHERE idUsager = ? AND idOeuvre = ? AND statut = 0";
             PreparedStatement pstmt = null;
 
             pstmt = con.prepareStatement(query);
@@ -167,6 +167,7 @@ public class Reservation {
 
          this.setStatut(1);
          this.update();
+
 
     }
 

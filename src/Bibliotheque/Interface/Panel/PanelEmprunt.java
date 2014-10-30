@@ -1,17 +1,16 @@
-package Bibliotheque.Interface;
+package Bibliotheque.Interface.Panel;
 
 import Bibliotheque.Modele.Entites.Emprunt;
 import Bibliotheque.Modele.Entites.Exemplaire;
 import Bibliotheque.Modele.Entites.Oeuvre;
-import Bibliotheque.Modele.Entites.Reservation;
 import Bibliotheque.Modele.Personne.Usager;
 
 import javax.swing.*;
 import java.awt.*;
-import java.sql.Timestamp;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 /**
  * Created by Gael on 29/10/14.
@@ -31,7 +30,7 @@ public class PanelEmprunt extends PanelGeneral {
 
         this.liste.setLayout(new BoxLayout(this.liste, BoxLayout.PAGE_AXIS));
 
-        for(Emprunt emprunt : listeEmprunts){
+        for(final Emprunt emprunt : listeEmprunts){
             JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 
             panel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
@@ -63,7 +62,18 @@ public class PanelEmprunt extends PanelGeneral {
             panel.add(labelTitreOeuvre);
             panel.add(labelDate);
 
-            JButton boutonEmprunt = new JButton("Emprunter");
+            JButton boutonEmprunt = new JButton("Emprunt terminé");
+
+            boutonEmprunt.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    emprunt.terminerEmprunt();
+                    liste.removeAll();
+                    listerEmprunt();
+                    JOptionPane.showMessageDialog(null, "Emprunt terminé !");
+                }
+            });
+
             panel.add(boutonEmprunt);
 
 

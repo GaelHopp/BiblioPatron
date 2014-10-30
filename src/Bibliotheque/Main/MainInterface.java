@@ -1,6 +1,6 @@
 package Bibliotheque.Main;
 
-import Bibliotheque.Interface.PanelPrincipal;
+import Bibliotheque.Interface.Panel.PanelPrincipal;
 
 import javax.swing.*;
 import java.awt.*;

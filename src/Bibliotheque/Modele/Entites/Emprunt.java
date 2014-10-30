@@ -68,12 +68,13 @@ public class Emprunt {
         try {
             java.sql.Connection con = Connexion.connexion();
 
-            String query = "UPDATE Exemplaire SET statut = ? WHERE idExemplaire = ? AND ";
+            String query = "UPDATE Emprunt SET statut = ? WHERE idExemplaire = ? AND idUsager = ? AND statut = 0";
             PreparedStatement pstmt = null;
 
             pstmt = con.prepareStatement(query);
             pstmt.setInt(1, this.statut);
             pstmt.setInt(2, this.idExemplaire);
+            pstmt.setInt(3, this.idUsager);
 
             pstmt.executeUpdate();
 
