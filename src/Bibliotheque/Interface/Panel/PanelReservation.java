@@ -1,5 +1,6 @@
 package Bibliotheque.Interface.Panel;
 
+import Bibliotheque.Interface.Fenetre.FenetreExemplaires;
 import Bibliotheque.Modele.Entites.Emprunt;
 import Bibliotheque.Modele.Entites.Exemplaire;
 import Bibliotheque.Modele.Entites.Oeuvre;
@@ -62,28 +63,25 @@ public class PanelReservation extends PanelGeneral {
 
             int nombreExemplaireDispo = Exemplaire.e_exemplaireDispo(oeuvre).size();
 
-            if(nombreExemplaireDispo > 0){
+            final Usager usagerFinal = Usager.findById(reservation.getIdUsager());
+            final Oeuvre oeuvreFinal = Oeuvre.findById(reservation.getIdOeuvre());
+
+
 
             JButton emprunt = new JButton("Emprunter");
 
             emprunt.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    Exemplaire ex = Exemplaire.e_exemplaireDispo(oeuvre).get(0);
-                    Emprunt emp = new Emprunt(usager.getIdPersonne(), ex.getIdExemplaire());
-                    emp.insert();
-
+                    FenetreExemplaires fenetre = new FenetreExemplaires();
+                    fenetre.listerExemplaires(usagerFinal, oeuvreFinal, true);
                     reservation.reservationTerminee();
-                    liste.removeAll();
-                    listerReservation();
-
-                    JOptionPane.showMessageDialog(null, "Emprunt enregistré !");
 
                 }
             });
 
             panel.add(emprunt);
-            }
+
 
 
             this.liste.add(panel);

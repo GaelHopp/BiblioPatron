@@ -53,6 +53,8 @@ public class PanelOeuvre extends PanelGeneral {
 
             JButton reservationEmprunt = new JButton("Réserver / Emprunter");
 
+
+
             reservationEmprunt.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -69,7 +71,36 @@ public class PanelOeuvre extends PanelGeneral {
             panel.add(reservationEmprunt);
 
 
+            final JTextField nbExemplaire = new JTextField();
+            nbExemplaire.setPreferredSize(new Dimension(40,20));
 
+            JButton ajouterExemplaire = new JButton("+");
+
+            ajouterExemplaire.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    if(nbExemplaire.getText().length() > 0){
+                       try{
+                           int nb = Integer.parseInt(nbExemplaire.getText());
+
+                           for(int i = 0; i < nb; i++){
+
+                               Exemplaire exemplaire = new Exemplaire(oeuvre.getIdOeuvre(), "Bon");
+                               exemplaire.insert();
+                               JOptionPane.showMessageDialog(null, i+" exemplaires ont été ajoutés");
+
+                           }
+
+                       }catch(NumberFormatException nbe){
+                           JOptionPane.showMessageDialog(null, "Le nombre d'exemplaire n'est pas correct");
+                       }
+                    }
+                }
+            });
+
+
+            panel.add(nbExemplaire);
+            panel.add(ajouterExemplaire);
 
 
             this.liste.add(panel);

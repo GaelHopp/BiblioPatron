@@ -86,13 +86,13 @@ public class Emprunt {
     }
 
 
-    public static Emprunt e_identification(Usager usager, Exemplaire exemplaire){
+    public static Emprunt e_identification(Usager usager, Oeuvre oeuvre){
         Emprunt emprunt = null;
 
         try {
             java.sql.Connection con = Connexion.connexion();
 
-            String query = "SELECT * FROM Emprunt WHERE idUsager = ? AND idExemplaire = ? AND statut = 0";
+            String query = "SELECT * FROM Emprunt WHERE idUsager = ? AND statut = 0 AND idExemplaire IN (SELECT idExemplaire FROM Exemplaire WHERE idOeuvre = ?)";
             PreparedStatement pstmt = null;
 
 
@@ -102,7 +102,7 @@ public class Emprunt {
 
             pstmt = con.prepareStatement(query);
             pstmt.setInt(1, usager.getIdPersonne());
-            pstmt.setInt(2, exemplaire.getIdExemplaire());
+            pstmt.setInt(2, oeuvre.getIdOeuvre());
             results = pstmt.executeQuery();
 
             if(results.next()){

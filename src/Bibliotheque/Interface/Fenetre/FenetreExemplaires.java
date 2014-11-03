@@ -14,16 +14,17 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 /**
- * Created by Gael on 30/10/14.
+ * Created by Gael on 03/11/14.
  */
-public class FenetreOeuvres extends JFrame{
+public class FenetreExemplaires extends JFrame {
 
     JPanel panel;
     Controleur controleur;
 
-    public FenetreOeuvres(){
+    public FenetreExemplaires(){
 
         panel = new JPanel();
+
 
         this.setPreferredSize(new Dimension(800,500));
 
@@ -37,17 +38,22 @@ public class FenetreOeuvres extends JFrame{
     }
 
 
-    public void listerOeuvre(Usager usager){
-        ArrayList<Oeuvre> listeOeuvre = Oeuvre.listerOeuvres();
+    public void listerExemplaires(Usager usager, Oeuvre oeuvre, boolean res){
+        ArrayList<Exemplaire> listeExemplaire = new ArrayList<Exemplaire>();
+
+       if(!res)
+        listeExemplaire = Exemplaire.e_exemplaireDispo(oeuvre);
+       else
+        listeExemplaire = Exemplaire.e_exemplaireReserve(oeuvre);
 
         this.panel.setLayout(new BoxLayout(this.panel, BoxLayout.PAGE_AXIS));
 
-        for(final Oeuvre oeuvre : listeOeuvre){
+        for(final Exemplaire exemplaire : listeExemplaire){
             JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 
             panel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
             panel.setPreferredSize(new Dimension(500,30));
-            JLabel labelID = new JLabel(oeuvre.getIdOeuvre()+"");
+            JLabel labelID = new JLabel(exemplaire.getIdExemplaire()+"");
             labelID.setPreferredSize(new Dimension(30,20));
 
             JLabel labelTitre = new JLabel(oeuvre.getTitre());
@@ -56,49 +62,38 @@ public class FenetreOeuvres extends JFrame{
             JLabel labelAuteur = new JLabel(oeuvre.getAuteur());
             labelAuteur.setPreferredSize(new Dimension(100,20));
 
-            int nombreExemplaire = Exemplaire.e_exemplaireDispo(oeuvre).size();
 
-            JLabel labelNombre = new JLabel(nombreExemplaire+"");
-            labelNombre.setPreferredSize(new Dimension(50,20));
 
             panel.add(labelID);
             panel.add(labelTitre);
             panel.add(labelAuteur);
-            panel.add(labelNombre);
 
-            if(Reservation.e_identification(usager, oeuvre) == null && Emprunt.e_identification(usager, oeuvre) == null){
 
-            JButton reservation = new JButton("Réserver");
 
-            final Usager usagerFinal = usager;
 
-            reservation.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    Reservation res = new Reservation(usagerFinal.getIdPersonne(), oeuvre.getIdOeuvre());
-                    res.insert();
-                    JOptionPane.showMessageDialog(null, "Réservation enregistrée !");
-                    dispose();
-                }
-            });
-
-            panel.add(reservation);
-
-            if(nombreExemplaire > 0){
                 JButton emprunt = new JButton("Emprunter");
+
+                final Usager usagerFinal = usager;
+                final Oeuvre oeuvreFinale = oeuvre;
+
+
                 emprunt.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        FenetreExemplaires fenetre = new FenetreExemplaires();
-                        fenetre.listerExemplaires(usagerFinal, oeuvre, false);
+                        Emprunt emp = new Emprunt(usagerFinal.getIdPersonne(), exemplaire.getIdExemplaire());
+                        emp.insert();
+                        Reservation reservationTheorique = Reservation.e_identification(usagerFinal, oeuvreFinale);
+                        if(reservationTheorique != null){
+                            reservationTheorique.reservationTerminee();
+                        }
+                        JOptionPane.showMessageDialog(null, "Emprunt enregistré !");
                         dispose();
-
                     }
                 });
 
                 panel.add(emprunt);
-            }
-            }
+
+
 
 
 
@@ -107,3 +102,4 @@ public class FenetreOeuvres extends JFrame{
         }
     }
 }
+

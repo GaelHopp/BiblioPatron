@@ -1,5 +1,6 @@
 package Bibliotheque.Interface.Fenetre;
 
+import Bibliotheque.Controleur.Controleur;
 import Bibliotheque.Modele.Entites.Emprunt;
 import Bibliotheque.Modele.Entites.Exemplaire;
 import Bibliotheque.Modele.Entites.Oeuvre;
@@ -18,12 +19,14 @@ import java.util.ArrayList;
 public class FenetreUsagers extends JFrame {
 
     JPanel panel;
+    Controleur controleur;
 
     public FenetreUsagers(){
 
 
 
         panel = new JPanel();
+
 
         this.setPreferredSize(new Dimension(800,500));
 
@@ -92,10 +95,8 @@ public class FenetreUsagers extends JFrame {
                 public void actionPerformed(ActionEvent e) {
 
 
-                    Exemplaire ex = Exemplaire.e_exemplaireDispo(oeuvreFinal).get(0);
-                    Emprunt emp = new Emprunt(usager.getIdPersonne(), ex.getIdExemplaire());
-                    emp.insert();
-                    JOptionPane.showMessageDialog(null, "Emprunt enregistré !");
+                   FenetreExemplaires fenetre = new FenetreExemplaires();
+                   fenetre.listerExemplaires(usager, oeuvreFinal, false);
                     dispose();
                 }
             });

@@ -50,7 +50,7 @@ public class PanelEmprunt extends PanelGeneral {
             labelPrenomUsager.setPreferredSize(new Dimension(150,20));
 
             JLabel labelTitreOeuvre = new JLabel(oeuvre.getTitre());
-            labelTitreOeuvre.setPreferredSize(new Dimension(200,20));
+            labelTitreOeuvre.setPreferredSize(new Dimension(150,20));
 
             String date = new SimpleDateFormat("MM/dd/yyyy").format(emprunt.getDateEmprunt());
 

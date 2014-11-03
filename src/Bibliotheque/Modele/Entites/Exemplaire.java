@@ -110,6 +110,55 @@ public class Exemplaire {
     }
 
 
+    public static ArrayList<Exemplaire> e_exemplaireReserve(Oeuvre oeuvre){
+
+        ArrayList<Exemplaire> listeExemplaire = new ArrayList<Exemplaire>();
+
+
+        try {
+            java.sql.Connection con = Connexion.connexion();
+
+            String query = "SELECT * FROM Exemplaire WHERE idOeuvre = ? AND idExemplaire NOT IN (SELECT idExemplaire FROM Emprunt WHERE statut = 0) AND idOeuvre IN (SELECT idOeuvre FROM Reservation WHERE statut=0)";
+            PreparedStatement pstmt = null;
+
+
+            ResultSet results;
+
+
+
+            pstmt = con.prepareStatement(query);
+            pstmt.setInt(1, oeuvre.getIdOeuvre());
+
+            results = pstmt.executeQuery();
+
+            while(results.next()){
+
+                int idExemplaire = results.getInt("idExemplaire");
+                int idOeuvre = results.getInt("idOeuvre");
+                String etat = results.getString("etat");
+
+
+                Exemplaire exemplaire = new Exemplaire(idOeuvre, etat);
+                exemplaire.setIdExemplaire(idExemplaire);
+
+                listeExemplaire.add(exemplaire);
+
+
+
+            }
+
+
+
+        }catch(Exception e){
+            e.printStackTrace();
+
+        }
+
+        return listeExemplaire;
+
+    }
+
+
     public void insert(){
         try {
             java.sql.Connection con = Connexion.connexion();
