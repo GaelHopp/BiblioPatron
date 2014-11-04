@@ -1,5 +1,7 @@
 package Bibliotheque.Interface.Panel;
 
+import Bibliotheque.Controleur.Controleur;
+
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -12,12 +14,13 @@ public class PanelPrincipal extends JPanel {
 
     public JTabbedPane onglets;
     boolean paneSet = false;
+    final Controleur controleur;
 
 
     public PanelPrincipal(){
 
 
-
+        this.controleur = new Controleur();
 
         this.setPreferredSize(new Dimension(800,600));
 
@@ -32,10 +35,10 @@ public class PanelPrincipal extends JPanel {
 
                 if(paneSet){
 
-                    PanelUsager panelUsager = new PanelUsager();
-                    PanelOeuvre panelOeuvre = new PanelOeuvre();
-                    PanelReservation panelReservation = new PanelReservation();
-                    PanelEmprunt panelEmprunt = new PanelEmprunt();
+                    PanelUsager panelUsager = new PanelUsager(controleur);
+                    PanelOeuvre panelOeuvre = new PanelOeuvre(controleur);
+                    PanelReservation panelReservation = new PanelReservation(controleur);
+                    PanelEmprunt panelEmprunt = new PanelEmprunt(controleur);
 
                     panelUsager.listerUsager();
                     panelUsager.ajouterUsager();
@@ -74,10 +77,10 @@ public class PanelPrincipal extends JPanel {
 
 
 
-        PanelUsager panelUsager = new PanelUsager();
-        PanelOeuvre panelOeuvre = new PanelOeuvre();
-        PanelReservation panelReservation = new PanelReservation();
-        PanelEmprunt panelEmprunt = new PanelEmprunt();
+        PanelUsager panelUsager = new PanelUsager(this.controleur);
+        PanelOeuvre panelOeuvre = new PanelOeuvre(this.controleur);
+        PanelReservation panelReservation = new PanelReservation(this.controleur);
+        PanelEmprunt panelEmprunt = new PanelEmprunt(this.controleur);
 
         panelUsager.listerUsager();
         panelUsager.ajouterUsager();

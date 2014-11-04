@@ -1,5 +1,6 @@
 package Bibliotheque.Interface.Panel;
 
+import Bibliotheque.Controleur.Controleur;
 import Bibliotheque.Modele.Entites.Emprunt;
 import Bibliotheque.Modele.Entites.Exemplaire;
 import Bibliotheque.Modele.Entites.Oeuvre;
@@ -17,8 +18,8 @@ import java.util.ArrayList;
  */
 public class PanelEmprunt extends PanelGeneral {
 
-    public PanelEmprunt(){
-        super();
+    public PanelEmprunt(Controleur controleur){
+        super(controleur);
     }
 
 

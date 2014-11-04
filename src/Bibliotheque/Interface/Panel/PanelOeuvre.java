@@ -1,5 +1,6 @@
 package Bibliotheque.Interface.Panel;
 
+import Bibliotheque.Controleur.Controleur;
 import Bibliotheque.Exception.OeuvreExistanteException;
 import Bibliotheque.Exception.UsagerExistantException;
 import Bibliotheque.Interface.Fenetre.FenetreUsagers;
@@ -18,8 +19,8 @@ import java.util.ArrayList;
  */
 public class PanelOeuvre extends PanelGeneral {
 
-    public PanelOeuvre(){
-        super();
+    public PanelOeuvre(Controleur controleur){
+        super(controleur);
     }
 
     public void listerOeuvre(){
@@ -87,9 +88,11 @@ public class PanelOeuvre extends PanelGeneral {
 
                                Exemplaire exemplaire = new Exemplaire(oeuvre.getIdOeuvre(), "Bon");
                                exemplaire.insert();
-                               JOptionPane.showMessageDialog(null, i+" exemplaires ont été ajoutés");
+
 
                            }
+                           nbExemplaire.setText("");
+                           JOptionPane.showMessageDialog(null, nb+" exemplaires ont été ajoutés");
 
                        }catch(NumberFormatException nbe){
                            JOptionPane.showMessageDialog(null, "Le nombre d'exemplaire n'est pas correct");
@@ -164,8 +167,8 @@ public class PanelOeuvre extends PanelGeneral {
 
                     try {
 
-                        Oeuvre oeuvre = new Oeuvre(fieldTitre.getText(), fieldAuteur.getText());
-                        oeuvre.insert();
+                        controleur.ajouterOeuvre(fieldTitre.getText(), fieldAuteur.getText());
+
                         JOptionPane.showMessageDialog(null, "Oeuvre insérée");
                         liste.removeAll();
                         listerOeuvre();

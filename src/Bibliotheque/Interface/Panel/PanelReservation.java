@@ -1,5 +1,6 @@
 package Bibliotheque.Interface.Panel;
 
+import Bibliotheque.Controleur.Controleur;
 import Bibliotheque.Interface.Fenetre.FenetreExemplaires;
 import Bibliotheque.Modele.Entites.Emprunt;
 import Bibliotheque.Modele.Entites.Exemplaire;
@@ -19,8 +20,8 @@ import java.util.ArrayList;
  */
 public class PanelReservation extends PanelGeneral {
 
-    public PanelReservation(){
-        super();
+    public PanelReservation(Controleur controleur){
+        super(controleur);
     }
 
 
@@ -69,14 +70,21 @@ public class PanelReservation extends PanelGeneral {
 
 
             JButton emprunt = new JButton("Emprunter");
+            JButton annuler = new JButton("X");
 
             emprunt.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     FenetreExemplaires fenetre = new FenetreExemplaires();
                     fenetre.listerExemplaires(usagerFinal, oeuvreFinal, true);
-                    reservation.reservationTerminee();
 
+                }
+            });
+
+            annuler.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    controleur.annulerReservation(reservation);
                 }
             });
 

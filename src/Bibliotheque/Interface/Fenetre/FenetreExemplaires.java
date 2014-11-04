@@ -26,11 +26,17 @@ public class FenetreExemplaires extends JFrame {
         panel = new JPanel();
 
 
+
         this.setPreferredSize(new Dimension(800,500));
 
         panel.setPreferredSize(new Dimension(800,500));
 
-        this.getContentPane().add(panel, BorderLayout.CENTER);
+        JScrollPane scroll = new JScrollPane(this.panel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        scroll.setPreferredSize(new Dimension(800, 500));
+
+
+
+        this.getContentPane().add(scroll, BorderLayout.CENTER);
         this.pack();
         this.setVisible(true);
 
@@ -80,11 +86,10 @@ public class FenetreExemplaires extends JFrame {
                 emprunt.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        Emprunt emp = new Emprunt(usagerFinal.getIdPersonne(), exemplaire.getIdExemplaire());
-                        emp.insert();
+                        controleur.emprunter(usagerFinal,exemplaire);
                         Reservation reservationTheorique = Reservation.e_identification(usagerFinal, oeuvreFinale);
                         if(reservationTheorique != null){
-                            reservationTheorique.reservationTerminee();
+                            controleur.annulerReservation(reservationTheorique);
                         }
                         JOptionPane.showMessageDialog(null, "Emprunt enregistré !");
                         dispose();

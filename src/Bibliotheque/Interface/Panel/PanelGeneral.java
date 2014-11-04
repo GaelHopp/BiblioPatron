@@ -1,5 +1,7 @@
 package Bibliotheque.Interface.Panel;
 
+import Bibliotheque.Controleur.Controleur;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -8,9 +10,12 @@ import java.awt.*;
  */
 public class PanelGeneral extends JPanel {
 
-    JPanel liste, ajout;
+    public JPanel liste, ajout;
+    public Controleur controleur;
 
-    public PanelGeneral(){
+    public PanelGeneral(Controleur controleur){
+
+        this.controleur = controleur;
 
         this.setPreferredSize(new Dimension(800,700));
 

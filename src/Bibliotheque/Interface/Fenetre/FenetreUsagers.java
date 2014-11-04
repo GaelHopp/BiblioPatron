@@ -77,8 +77,8 @@ public class FenetreUsagers extends JFrame {
                 @Override
                 public void actionPerformed(ActionEvent e) {
 
-                    Reservation res = new Reservation(usager.getIdPersonne(), oeuvreFinal.getIdOeuvre());
-                    res.insert();
+                    controleur.reserver(usager,oeuvreFinal);
+
                     JOptionPane.showMessageDialog(null, "Réservation enregistrée !");
                     dispose();
                 }

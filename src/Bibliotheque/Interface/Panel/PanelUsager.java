@@ -1,5 +1,6 @@
 package Bibliotheque.Interface.Panel;
 
+import Bibliotheque.Controleur.Controleur;
 import Bibliotheque.Exception.UsagerExistantException;
 import Bibliotheque.Interface.Fenetre.FenetreOeuvres;
 import Bibliotheque.Interface.Fenetre.FenetreUsagers;
@@ -16,8 +17,8 @@ import java.util.ArrayList;
  */
 public class PanelUsager extends PanelGeneral {
 
-    public PanelUsager(){
-        super();
+    public PanelUsager(Controleur controleur){
+        super(controleur);
     }
 
    public void listerUsager(){
@@ -142,8 +143,8 @@ public class PanelUsager extends PanelGeneral {
 
                     try{
 
-                        Usager usager = new Usager(fieldNom.getText(), fieldPrenom.getText(), Integer.parseInt(fieldAge.getText()), fieldAdresse.getText());
-                        usager.insert();
+                        controleur.ajouterUsager(fieldNom.getText(), fieldPrenom.getText(), Integer.parseInt(fieldAge.getText()), fieldAdresse.getText());
+
                         JOptionPane.showMessageDialog(null, "Usager inséré");
                         liste.removeAll();
                         listerUsager();
