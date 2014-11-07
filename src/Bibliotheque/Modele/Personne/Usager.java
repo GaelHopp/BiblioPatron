@@ -211,9 +211,11 @@ public class Usager extends Personne {
                 String prenomPersonne = results2.getString("prenom");
                 int agePersonne = results2.getInt("age");
                 String adressePersonne = results2.getString("adresse");
+                int statutPersonne = results2.getInt("statut");
 
                 usager = new Usager(nomPersonne, prenomPersonne, agePersonne, adressePersonne);
                 usager.setIdPersonne(idPersonne);
+                usager.setStatut(statutPersonne);
 
             }
 
@@ -264,9 +266,11 @@ public class Usager extends Personne {
                 String prenomPersonne = results.getString("prenom");
                 int agePersonne = results.getInt("age");
                 String adressePersonne = results.getString("adresse");
+                int statutPersonne = results.getInt("statut");
 
                 Usager usager = new Usager(nomPersonne, prenomPersonne, agePersonne, adressePersonne);
                 usager.setIdPersonne(idPersonne);
+                usager.setStatut(statutPersonne);
 
                 liste.add(usager);
 

@@ -33,7 +33,7 @@ public class Personne {
         try {
             java.sql.Connection con = Connexion.connexion();
 
-            String query = "UPDATE Personne SET nom=?, prenom=?, age=?, adresse=? WHERE idPersonne = ?";
+            String query = "UPDATE Personne SET nom=?, prenom=?, age=?, adresse=?, statut = ? WHERE idPersonne = ?";
             PreparedStatement pstmt = null;
 
             pstmt = con.prepareStatement(query);
@@ -41,7 +41,8 @@ public class Personne {
             pstmt.setString(2, this.prenom);
             pstmt.setInt(3, this.age);
             pstmt.setString(4, this.adresse);
-            pstmt.setInt(5, this.idPersonne);
+            pstmt.setInt(5, this.statut);
+            pstmt.setInt(6, this.idPersonne);
 
             pstmt.executeUpdate();
 
@@ -54,6 +55,11 @@ public class Personne {
 
     public void delete(){
         this.setStatut(0);
+        this.update();
+    }
+
+    public void activer(){
+        this.setStatut(1);
         this.update();
     }
 

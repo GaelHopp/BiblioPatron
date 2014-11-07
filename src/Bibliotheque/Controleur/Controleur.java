@@ -65,6 +65,14 @@ public class Controleur {
         usager.update();
     }
 
+    public void supprimerUsager(Usager usager){
+        usager.delete();
+    }
+
+    public void activerUsager(Usager usager){
+        usager.activer();
+    }
+
 
 
 

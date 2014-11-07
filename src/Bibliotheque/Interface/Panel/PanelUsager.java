@@ -29,7 +29,7 @@ public class PanelUsager extends PanelGeneral {
 
        this.liste.setLayout(new BoxLayout(this.liste, BoxLayout.PAGE_AXIS));
 
-       for(final Usager usager : listeUsager){
+       for(Usager usager : listeUsager){
            JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 
            panel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
@@ -46,15 +46,37 @@ public class PanelUsager extends PanelGeneral {
            JLabel labelAge = new JLabel(usager.getAge()+"");
            labelAge.setPreferredSize(new Dimension(30,20));
 
+           JLabel labelStatut = new JLabel(usager.getStatut()+"");
+           labelStatut.setPreferredSize(new Dimension(20,20));
+
 
            panel.add(labelID);
            panel.add(labelNom);
            panel.add(labelPrenom);
            panel.add(labelAge);
+           panel.add(labelStatut);
+
+           final Usager usagerFinal = usager;
+
+
+           JButton modifier = new JButton("Modifier");
+
+           modifier.addActionListener(new ActionListener() {
+               @Override
+               public void actionPerformed(ActionEvent e) {
+                   FenetreModifUsager fenetreModifUsager = new FenetreModifUsager(controleur);
+                   fenetreModifUsager.afficherInfosUsager(usagerFinal);
+
+               }
+           });
+
+           panel.add(modifier);
+
+           if(usager.getStatut() == 1){
 
            JButton reservationEmprunt = new JButton("Réserver / Emprunter");
 
-           final Usager usagerFinal = usager;
+
 
            reservationEmprunt.addActionListener(new ActionListener() {
                @Override
@@ -67,29 +89,43 @@ public class PanelUsager extends PanelGeneral {
                }
            });
 
-           JButton modifierUsager = new JButton("Modifier");
 
-           modifierUsager.addActionListener(new ActionListener() {
-               @Override
-               public void actionPerformed(ActionEvent e) {
-
-               }
-           });
 
            panel.add(reservationEmprunt);
 
-           JButton modifier = new JButton("Modifier");
 
-           modifier.addActionListener(new ActionListener() {
+           JButton delete = new JButton("-");
+
+           delete.addActionListener(new ActionListener() {
                @Override
                public void actionPerformed(ActionEvent e) {
-                   FenetreModifUsager fenetreModifUsager = new FenetreModifUsager(controleur);
-                   fenetreModifUsager.afficherInfosUsager(usager);
-
+                   controleur.supprimerUsager(usagerFinal);
+                   liste.removeAll();
+                   listerUsager();
                }
            });
 
-           panel.add(modifier);
+               panel.add(delete);
+
+           }
+           else{
+               JButton activer = new JButton("+");
+
+               activer.addActionListener(new ActionListener() {
+                   @Override
+                   public void actionPerformed(ActionEvent e) {
+                       controleur.activerUsager(usagerFinal);
+                       liste.removeAll();
+                       listerUsager();
+                   }
+               });
+
+               panel.add(activer);
+
+           }
+
+
+
 
            this.liste.add(panel);
 
