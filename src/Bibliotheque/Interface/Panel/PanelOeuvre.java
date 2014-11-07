@@ -4,6 +4,7 @@ import Bibliotheque.Controleur.Controleur;
 import Bibliotheque.Exception.OeuvreExistanteException;
 import Bibliotheque.Exception.UsagerExistantException;
 import Bibliotheque.Interface.Fenetre.FenetreListeExemplaires;
+import Bibliotheque.Interface.Fenetre.FenetreModifOeuvre;
 import Bibliotheque.Interface.Fenetre.FenetreUsagers;
 import Bibliotheque.Modele.Entites.Exemplaire;
 import Bibliotheque.Modele.Entites.Oeuvre;
@@ -149,6 +150,19 @@ public class PanelOeuvre extends PanelGeneral {
             });
 
             panel.add(liste);
+
+
+            JButton modifier = new JButton("Modif");
+
+            modifier.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    FenetreModifOeuvre fenetreModifOeuvre = new FenetreModifOeuvre(controleur);
+                    fenetreModifOeuvre.afficherInfosOeuvre(oeuvre);
+                }
+            });
+
+            panel.add(modifier);
 
             this.liste.add(panel);
 

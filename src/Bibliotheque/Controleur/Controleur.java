@@ -90,6 +90,14 @@ public class Controleur {
         exemplaire.activer();
     }
 
+    public void modifierExemplaire(Exemplaire exemplaire){
+        exemplaire.update();
+    }
+
+    public void modifierOeuvre(Oeuvre oeuvre){
+        oeuvre.update();
+    }
+
 
 
 

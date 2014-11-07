@@ -57,13 +57,12 @@ public class FenetreListeExemplaires extends JFrame {
             JLabel labelAuteur = new JLabel(oeuvre.getAuteur());
             labelTitreOeuvre.setPreferredSize(new Dimension(150,20));
 
-            JLabel labelStatut = new JLabel(exemplaire.getStatut()+"");
-            labelStatut.setPreferredSize(new Dimension(20,20));
+
 
 
             panel.add(labelTitreOeuvre);
             panel.add(labelAuteur);
-            panel.add(labelStatut);
+
 
             final Oeuvre oeuvreFinale = oeuvre;
 
@@ -74,6 +73,9 @@ public class FenetreListeExemplaires extends JFrame {
             modif.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
+
+                    FenetreModifExemplaire fenetreModifExemplaire = new FenetreModifExemplaire(controleur);
+                    fenetreModifExemplaire.afficherInfosExemplaire(exemplaire);
 
                 }
             });
@@ -87,9 +89,12 @@ public class FenetreListeExemplaires extends JFrame {
                 public void actionPerformed(ActionEvent e) {
                     controleur.supprimerExemplaire(exemplaire);
 
-                    
+                    FenetreListeExemplaires fenetre = new FenetreListeExemplaires(controleur);
+                    fenetre.listerExemplaire(oeuvreFinale);
 
-                    listerExemplaire(oeuvreFinale);
+                    dispose();
+
+
 
                 }
             });
@@ -103,7 +108,10 @@ public class FenetreListeExemplaires extends JFrame {
                     public void actionPerformed(ActionEvent e) {
                         controleur.activerExemplaire(exemplaire);
 
-                        listerExemplaire(oeuvreFinale);
+                        FenetreListeExemplaires fenetre = new FenetreListeExemplaires(controleur);
+                        fenetre.listerExemplaire(oeuvreFinale);
+
+                        dispose();
 
                     }
                 });
