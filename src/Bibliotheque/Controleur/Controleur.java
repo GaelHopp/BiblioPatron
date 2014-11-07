@@ -61,6 +61,12 @@ public class Controleur {
     }
 
 
+    public void modifierUsager(Usager usager) throws UsagerExistantException {
+        usager.update();
+    }
+
+
+
 
 
 

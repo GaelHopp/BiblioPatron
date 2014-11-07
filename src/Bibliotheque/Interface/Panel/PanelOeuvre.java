@@ -59,7 +59,7 @@ public class PanelOeuvre extends PanelGeneral {
             reservationEmprunt.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    FenetreUsagers fenetre = new FenetreUsagers();
+                    FenetreUsagers fenetre = new FenetreUsagers(controleur);
                     boolean empruntOK = false;
 
                     if(nombreExemplaire > 0)
@@ -86,8 +86,7 @@ public class PanelOeuvre extends PanelGeneral {
 
                            for(int i = 0; i < nb; i++){
 
-                               Exemplaire exemplaire = new Exemplaire(oeuvre.getIdOeuvre(), "Bon");
-                               exemplaire.insert();
+                               controleur.ajouterExemplaire(oeuvre);
 
 
                            }

@@ -20,9 +20,9 @@ public class FenetreListeExemplaires extends JFrame {
     PanelGeneral panelGeneral;
     Controleur controleur;
 
-        public FenetreListeExemplaires(Controleur controleur){
+        public FenetreListeExemplaires(Controleur c){
 
-            this.controleur = controleur;
+            this.controleur = c;
             panelGeneral = new PanelGeneral(controleur);
 
             this.setPreferredSize(new Dimension(800,500));

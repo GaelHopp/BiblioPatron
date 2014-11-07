@@ -21,8 +21,8 @@ public class FenetreExemplaires extends JFrame {
     JPanel panel;
     Controleur controleur;
 
-    public FenetreExemplaires(){
-
+    public FenetreExemplaires(Controleur c){
+        this.controleur = c;
         panel = new JPanel();
 
 

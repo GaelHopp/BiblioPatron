@@ -68,8 +68,7 @@ public class PanelEmprunt extends PanelGeneral {
             boutonEmprunt.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    emprunt.terminerEmprunt();
-                    liste.removeAll();
+                    controleur.terminerEmprunt(emprunt);
                     listerEmprunt();
                     JOptionPane.showMessageDialog(null, "Emprunt terminé !");
                 }

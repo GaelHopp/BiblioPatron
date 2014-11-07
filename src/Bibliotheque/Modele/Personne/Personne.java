@@ -33,15 +33,15 @@ public class Personne {
         try {
             java.sql.Connection con = Connexion.connexion();
 
-            String query = "UPDATE Personne SET statut = ?,nom=?, prenom=?, age=?, adresse=? WHERE idPersonne = ?";
+            String query = "UPDATE Personne SET nom=?, prenom=?, age=?, adresse=? WHERE idPersonne = ?";
             PreparedStatement pstmt = null;
 
             pstmt = con.prepareStatement(query);
-            pstmt.setInt(1, this.statut);
-            pstmt.setString(2, this.nom);
-            pstmt.setString(3, this.prenom);
-            pstmt.setInt(4, this.age);
-            pstmt.setString(5, this.adresse);
+            pstmt.setString(1, this.nom);
+            pstmt.setString(2, this.prenom);
+            pstmt.setInt(3, this.age);
+            pstmt.setString(4, this.adresse);
+            pstmt.setInt(5, this.idPersonne);
 
             pstmt.executeUpdate();
 

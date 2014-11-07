@@ -21,9 +21,9 @@ public class FenetreUsagers extends JFrame {
     JPanel panel;
     Controleur controleur;
 
-    public FenetreUsagers(){
+    public FenetreUsagers(Controleur c){
 
-
+        this.controleur = c;
 
         panel = new JPanel();
 
@@ -95,7 +95,7 @@ public class FenetreUsagers extends JFrame {
                 public void actionPerformed(ActionEvent e) {
 
 
-                   FenetreExemplaires fenetre = new FenetreExemplaires();
+                   FenetreExemplaires fenetre = new FenetreExemplaires(controleur);
                    fenetre.listerExemplaires(usager, oeuvreFinal, false);
                     dispose();
                 }
@@ -104,6 +104,10 @@ public class FenetreUsagers extends JFrame {
 
             panel.add(emprunt);
             }
+
+
+
+
 
             this.panel.add(panel);
 

@@ -46,7 +46,7 @@ public class Usager extends Personne {
         try {
             java.sql.Connection con = Connexion.connexion();
 
-            String query = "INSERT INTO Personne (nom, prenom, age, adresse) VALUES (?, ?, ?, ?)";
+            String query = "INSERT INTO Personne (nom, prenom, age, adresse, statut) VALUES (?, ?, ?, ?, 1)";
 
             PreparedStatement pstmt = null;
 
@@ -131,6 +131,7 @@ public class Usager extends Personne {
                 String prenomPersonne = results.getString("prenom");
                 int agePersonne = results.getInt("age");
                 String adressePersonne = results.getString("adresse");
+                int statutPersonne = results.getInt("statut");
 
                 String query2 = "SELECT * FROM Usager WHERE idUsager = ?";
                 PreparedStatement pstmt2 = null;

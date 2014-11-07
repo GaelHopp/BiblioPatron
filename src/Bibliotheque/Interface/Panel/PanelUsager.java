@@ -2,6 +2,7 @@ package Bibliotheque.Interface.Panel;
 
 import Bibliotheque.Controleur.Controleur;
 import Bibliotheque.Exception.UsagerExistantException;
+import Bibliotheque.Interface.Fenetre.FenetreModifUsager;
 import Bibliotheque.Interface.Fenetre.FenetreOeuvres;
 import Bibliotheque.Interface.Fenetre.FenetreUsagers;
 import Bibliotheque.Modele.Personne.Usager;
@@ -59,14 +60,36 @@ public class PanelUsager extends PanelGeneral {
                @Override
                public void actionPerformed(ActionEvent e) {
 
-                   FenetreOeuvres fenetre = new FenetreOeuvres();
+                   FenetreOeuvres fenetre = new FenetreOeuvres(controleur);
 
 
                    fenetre.listerOeuvre(usagerFinal);
                }
            });
 
+           JButton modifierUsager = new JButton("Modifier");
+
+           modifierUsager.addActionListener(new ActionListener() {
+               @Override
+               public void actionPerformed(ActionEvent e) {
+
+               }
+           });
+
            panel.add(reservationEmprunt);
+
+           JButton modifier = new JButton("Modifier");
+
+           modifier.addActionListener(new ActionListener() {
+               @Override
+               public void actionPerformed(ActionEvent e) {
+                   FenetreModifUsager fenetreModifUsager = new FenetreModifUsager(controleur);
+                   fenetreModifUsager.afficherInfosUsager(usager);
+
+               }
+           });
+
+           panel.add(modifier);
 
            this.liste.add(panel);
 

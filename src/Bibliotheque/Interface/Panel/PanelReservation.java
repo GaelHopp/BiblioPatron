@@ -75,7 +75,7 @@ public class PanelReservation extends PanelGeneral {
             emprunt.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    FenetreExemplaires fenetre = new FenetreExemplaires();
+                    FenetreExemplaires fenetre = new FenetreExemplaires(controleur);
                     fenetre.listerExemplaires(usagerFinal, oeuvreFinal, true);
 
                 }
