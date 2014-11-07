@@ -22,7 +22,7 @@ public class PanelPrincipal extends JPanel {
 
         this.controleur = new Controleur();
 
-        this.setPreferredSize(new Dimension(800,600));
+        this.setPreferredSize(new Dimension(1000,600));
 
         BorderLayout borderLayout = new BorderLayout();
         this.setLayout(borderLayout);

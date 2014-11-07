@@ -77,6 +77,40 @@ public class Oeuvre {
 
             pstmt.executeUpdate();
 
+
+            String query2 = "SELECT * FROM Exemplaire WHERE idOeuvre = ?";
+            PreparedStatement pstmt2 = null;
+
+            ResultSet results;
+            pstmt2 = con.prepareStatement(query2);
+            pstmt2.setInt(1, this.idOeuvre);
+            results = pstmt2.executeQuery();
+
+            while(results.next()){
+
+             int idExemplaire = results.getInt("idExemplaire");
+             int idOeuvre = results.getInt("idOeuvre");
+             String etat = results.getString("etat");
+             int statut = results.getInt("statut");
+
+
+              Exemplaire exemplaire = new Exemplaire(idOeuvre, etat);
+              exemplaire.setIdExemplaire(idExemplaire);
+
+                if(this.getStatut() == 0){
+                    exemplaire.setStatut(0);
+                }
+
+                exemplaire.update();
+
+
+            }
+
+            pstmt = con.prepareStatement(query2);
+            pstmt.setInt(1, this.idOeuvre);
+
+
+
             con.close();
         }catch(Exception e){
             e.printStackTrace();
@@ -179,7 +213,7 @@ public class Oeuvre {
         try {
             java.sql.Connection con = Connexion.connexion();
 
-            String query = "SELECT * FROM Oeuvre WHERE statut = 1";
+            String query = "SELECT * FROM Oeuvre";
             PreparedStatement pstmt = null;
 
 
@@ -234,6 +268,11 @@ public class Oeuvre {
         this.setStatut(0);
         this.update();
 
+    }
+
+    public void activer(){
+        this.setStatut(1);
+        this.update();
     }
 
 

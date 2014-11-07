@@ -35,7 +35,7 @@ public class PanelEmprunt extends PanelGeneral {
             JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 
             panel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-            panel.setPreferredSize(new Dimension(500,30));
+            panel.setPreferredSize(new Dimension(1000,30));
 
             Usager usager = Usager.findById(emprunt.getIdUsager());
             Exemplaire exemplaire = Exemplaire.e_identification(emprunt.getIdExemplaire());

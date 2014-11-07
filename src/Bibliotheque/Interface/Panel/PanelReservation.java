@@ -35,7 +35,7 @@ public class PanelReservation extends PanelGeneral {
             JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 
             panel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-            panel.setPreferredSize(new Dimension(500,30));
+            panel.setPreferredSize(new Dimension(1000,30));
 
           final Usager usager = Usager.findById(reservation.getIdUsager());
           final Oeuvre oeuvre = Oeuvre.findById(reservation.getIdOeuvre());

@@ -43,7 +43,7 @@ public class Exemplaire {
         try {
             java.sql.Connection con = Connexion.connexion();
 
-            String query = "SELECT * FROM Exemplaire WHERE idOeuvre = ? AND idExemplaire NOT IN (SELECT idExemplaire FROM Emprunt WHERE statut = 0)";
+            String query = "SELECT * FROM Exemplaire WHERE idOeuvre = ? AND statut = 1 AND idExemplaire NOT IN (SELECT idExemplaire FROM Emprunt WHERE statut = 0)";
             PreparedStatement pstmt = null;
 
 
@@ -61,10 +61,12 @@ public class Exemplaire {
             int idExemplaire = results.getInt("idExemplaire");
             int idOeuvre = results.getInt("idOeuvre");
             String etat = results.getString("etat");
+            int statut = results.getInt("statut");
 
 
             Exemplaire exemplaire = new Exemplaire(idOeuvre, etat);
             exemplaire.setIdExemplaire(idExemplaire);
+            exemplaire.setStatut(statut);
 
             listeExemplaire.add(exemplaire);
 
@@ -136,10 +138,12 @@ public class Exemplaire {
                 int idExemplaire = results.getInt("idExemplaire");
                 int idOeuvre = results.getInt("idOeuvre");
                 String etat = results.getString("etat");
+                int statut = results.getInt("statut");
 
 
                 Exemplaire exemplaire = new Exemplaire(idOeuvre, etat);
                 exemplaire.setIdExemplaire(idExemplaire);
+                exemplaire.setStatut(statut);
 
                 listeExemplaire.add(exemplaire);
 
@@ -157,6 +161,59 @@ public class Exemplaire {
         return listeExemplaire;
 
     }
+
+
+    public static ArrayList<Exemplaire> e_AllExemplaires(Oeuvre oeuvre){
+
+        ArrayList<Exemplaire> listeExemplaire = new ArrayList<Exemplaire>();
+
+
+        try {
+            java.sql.Connection con = Connexion.connexion();
+
+            String query = "SELECT * FROM Exemplaire WHERE idOeuvre = ?";
+            PreparedStatement pstmt = null;
+
+
+            ResultSet results;
+
+
+
+            pstmt = con.prepareStatement(query);
+            pstmt.setInt(1, oeuvre.getIdOeuvre());
+
+            results = pstmt.executeQuery();
+
+            while(results.next()){
+
+                int idExemplaire = results.getInt("idExemplaire");
+                int idOeuvre = results.getInt("idOeuvre");
+                String etat = results.getString("etat");
+                int statut = results.getInt("statut");
+
+
+                Exemplaire exemplaire = new Exemplaire(idOeuvre, etat);
+                exemplaire.setIdExemplaire(idExemplaire);
+                exemplaire.setStatut(statut);
+
+                listeExemplaire.add(exemplaire);
+
+
+
+            }
+
+
+
+        }catch(Exception e){
+            e.printStackTrace();
+
+        }
+
+        return listeExemplaire;
+
+    }
+
+
 
 
     public void insert(){
@@ -249,6 +306,11 @@ public class Exemplaire {
 
     public void delete(){
         this.setStatut(0);
+        this.update();
+    }
+
+    public void activer(){
+        this.setStatut(1);
         this.update();
     }
 

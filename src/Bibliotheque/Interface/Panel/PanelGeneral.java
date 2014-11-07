@@ -17,7 +17,7 @@ public class PanelGeneral extends JPanel {
 
         this.controleur = controleur;
 
-        this.setPreferredSize(new Dimension(800,700));
+        this.setPreferredSize(new Dimension(1000,700));
 
         BorderLayout borderLayout = new BorderLayout();
         this.setLayout(borderLayout);
@@ -25,12 +25,12 @@ public class PanelGeneral extends JPanel {
         this.liste = new JPanel();
 
         JScrollPane scroll = new JScrollPane(this.liste, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        scroll.setPreferredSize(new Dimension(800, 300));
+        scroll.setPreferredSize(new Dimension(1000, 300));
 
         this.add(scroll, BorderLayout.NORTH);
 
         this.ajout = new JPanel();
-        this.ajout.setPreferredSize(new Dimension(800, 250));
+        this.ajout.setPreferredSize(new Dimension(1000, 250));
 
 
         this.add(this.ajout, BorderLayout.SOUTH);

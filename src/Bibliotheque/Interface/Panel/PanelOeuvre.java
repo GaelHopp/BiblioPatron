@@ -3,6 +3,7 @@ package Bibliotheque.Interface.Panel;
 import Bibliotheque.Controleur.Controleur;
 import Bibliotheque.Exception.OeuvreExistanteException;
 import Bibliotheque.Exception.UsagerExistantException;
+import Bibliotheque.Interface.Fenetre.FenetreListeExemplaires;
 import Bibliotheque.Interface.Fenetre.FenetreUsagers;
 import Bibliotheque.Modele.Entites.Exemplaire;
 import Bibliotheque.Modele.Entites.Oeuvre;
@@ -32,7 +33,7 @@ public class PanelOeuvre extends PanelGeneral {
             JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 
             panel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-            panel.setPreferredSize(new Dimension(500,30));
+            panel.setPreferredSize(new Dimension(1000,30));
             JLabel labelID = new JLabel(oeuvre.getIdOeuvre()+"");
             labelID.setPreferredSize(new Dimension(30,20));
 
@@ -42,6 +43,9 @@ public class PanelOeuvre extends PanelGeneral {
             JLabel labelAuteur = new JLabel(oeuvre.getAuteur());
             labelAuteur.setPreferredSize(new Dimension(100,20));
 
+            JLabel labelStatut = new JLabel(oeuvre.getStatut()+"");
+            labelStatut.setPreferredSize(new Dimension(20,20));
+
             final int nombreExemplaire = Exemplaire.e_exemplaireDispo(oeuvre).size();
 
             JLabel labelNombre = new JLabel(nombreExemplaire+"");
@@ -50,7 +54,10 @@ public class PanelOeuvre extends PanelGeneral {
             panel.add(labelID);
             panel.add(labelTitre);
             panel.add(labelAuteur);
+            panel.add(labelStatut);
             panel.add(labelNombre);
+
+            if(oeuvre.getStatut() == 1){
 
             JButton reservationEmprunt = new JButton("Réserver / Emprunter");
 
@@ -75,7 +82,7 @@ public class PanelOeuvre extends PanelGeneral {
             final JTextField nbExemplaire = new JTextField();
             nbExemplaire.setPreferredSize(new Dimension(40,20));
 
-            JButton ajouterExemplaire = new JButton("+");
+            JButton ajouterExemplaire = new JButton("Add");
 
             ajouterExemplaire.addActionListener(new ActionListener() {
                 @Override
@@ -104,6 +111,44 @@ public class PanelOeuvre extends PanelGeneral {
             panel.add(nbExemplaire);
             panel.add(ajouterExemplaire);
 
+             JButton delete = new JButton("-");
+
+             delete.addActionListener(new ActionListener() {
+                 @Override
+                 public void actionPerformed(ActionEvent e) {
+                     controleur.supprimerOeuvre(oeuvre);
+                 }
+             });
+
+                panel.add(delete);
+
+
+            }else{
+
+                JButton activer = new JButton("+");
+
+                activer.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        controleur.activerOeuvre(oeuvre);
+                    }
+                });
+
+                panel.add(activer);
+
+            }
+
+            JButton liste = new JButton("Liste");
+
+            liste.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    FenetreListeExemplaires fenetreListeExemplaires = new FenetreListeExemplaires(controleur);
+                    fenetreListeExemplaires.listerExemplaire(oeuvre);
+                }
+            });
+
+            panel.add(liste);
 
             this.liste.add(panel);
 

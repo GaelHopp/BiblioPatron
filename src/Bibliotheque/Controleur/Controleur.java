@@ -73,6 +73,23 @@ public class Controleur {
         usager.activer();
     }
 
+    public void supprimerOeuvre(Oeuvre oeuvre){
+        oeuvre.delete();
+    }
+
+    public void activerOeuvre(Oeuvre oeuvre){
+        oeuvre.activer();
+    }
+
+    public void supprimerExemplaire(Exemplaire exemplaire){
+        exemplaire.delete();
+
+    }
+
+    public void activerExemplaire(Exemplaire exemplaire){
+        exemplaire.activer();
+    }
+
 
 
 

@@ -33,7 +33,7 @@ public class PanelUsager extends PanelGeneral {
            JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 
            panel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-           panel.setPreferredSize(new Dimension(500,30));
+           panel.setPreferredSize(new Dimension(1000,30));
            JLabel labelID = new JLabel(usager.getIdPersonne()+"");
            labelID.setPreferredSize(new Dimension(30,20));
 
