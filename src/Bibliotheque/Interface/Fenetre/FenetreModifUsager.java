@@ -130,6 +130,7 @@ public class FenetreModifUsager extends JFrame{
                         fieldPrenom.setText("");
                         fieldAge.setText("");
                         fieldAdresse.setText("");
+                        dispose();
                     }catch(UsagerExistantException uee){
                         JOptionPane.showMessageDialog(null, "L'usager existe déjà");
                     }catch(NumberFormatException nfe){

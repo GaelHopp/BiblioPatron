@@ -90,7 +90,16 @@ public class PanelReservation extends PanelGeneral {
 
             panel.add(emprunt);
 
+            annuler.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    controleur.annulerReservation(reservation);
+                    JOptionPane.showMessageDialog(null, "Réservation annulée");
 
+                }
+            });
+
+             panel.add(annuler);
 
             this.liste.add(panel);
 

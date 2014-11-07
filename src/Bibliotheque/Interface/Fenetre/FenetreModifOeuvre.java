@@ -107,7 +107,7 @@ public class FenetreModifOeuvre extends JFrame {
 
                     controleur.modifierOeuvre(oeuvreFinale);
 
-                    JOptionPane.showMessageDialog(null, "Exemplaire modifié");
+                    JOptionPane.showMessageDialog(null, "Oeuvre modifiée");
                     dispose();
 
                 }else{
